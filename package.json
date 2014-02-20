@@ -7,6 +7,22 @@
     "name": "John Doe",
     "company": "ACME, Inc."
   },
+  "_comment": {
+    "jquery": "<2.0.0",
+    "jquery-ui": "~1.10.3",
+    "jquery-ujs": "",
+    "angular": "=1.2.9",
+    "angular-resource": "1.2.9",
+    "ng-sanitize": "1.2.9",
+    "angular-bootstrap": "~0.10",
+    "ng-grid": "~2.0.7",
+    "jquery-file-upload": "~9.5.0",
+    "blueimp-load-image": "~1.11.0"
+  },
+  "dependencies": {
+    "angular": "=1.2.9",
+    "ng-grid": ""
+  },
   "devDependencies": {
     "protractor": ">=0.8.0",
     "jasmine-given": "~2.1.0",

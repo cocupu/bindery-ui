@@ -1,30 +1,41 @@
-/* Exports a function which returns an object that overrides the default &
- *   plugin file patterns (used widely through the app configuration)
+/* Exports an object that defines
+ *  all of the paths & globs that the project
+ *  is concerned with.
  *
- * To see the default definitions for Lineman's file paths and globs, see:
+ * The "configure" task will require this file and
+ *  then re-initialize the grunt config such that
+ *  directives like <config:files.js.app> will work
+ *  regardless of the point you're at in the build
+ *  lifecycle.
  *
- *   - https://github.com/linemanjs/lineman/blob/master/config/files.coffee
+ * You can find the parent object in: node_modules/lineman/config/files.coffee
  */
-module.exports = function(lineman) {
-  //Override file patterns here
-  return {
-    js: {
-      vendor: [
-        "vendor/js/angular.js",
-        "vendor/js/**/*.js"
-      ],
-      app: [
-        "app/js/app.js",
-        "app/js/**/*.js"
-      ]
-    },
 
-    less: {
-      compile: {
-        options: {
-          paths: ["vendor/css/normalize.css", "vendor/css/**/*.css", "app/css/**/*.less"]
-        }
+module.exports = require(process.env['LINEMAN_MAIN']).config.extend('files', {
+  js: {
+    vendor: [
+      "vendor/bower/jquery/jquery.js",
+			"vendor/bower/jquery-ui/jquery-ui.js",
+			"vendor/bower/jquery-ui/jquery-scrollTo-min.js",
+			// "vendor/bower/bootstrap/bootstrap.js",
+      "vendor/bower/angular/angular.js",
+	  	"vendor/bower/angular-resource/angular-resource.js",
+			"vendor/bower/angular-sanitize/angular-sanitize.js",
+      "vendor/bower/angular-bootstrap/angular-bootstrap.js",
+      "vendor/bower/ng-grid/ng-grid.min.js",
+      "vendor/js/**/*.js"
+    ],
+    app: [
+      "app/js/app.js",
+      "app/js/**/*.js"
+    ]
+  },
+
+  less: {
+    compile: {
+      options: {
+        paths: ["vendor/css/normalize.css", "vendor/css/**/*.css", "app/css/**/*.less"]
       }
     }
-  };
-};
+  }
+});

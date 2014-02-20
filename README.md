@@ -19,12 +19,13 @@ It includes the following features:
 
 # Instructions
 
-1. `git clone https://github.com/davemo/lineman-angular-template.git my-lineman-app`
-2. `cd my-lineman-app`
-3. `sudo npm install -g lineman`
-4. `npm install`
-5. `lineman run`
-6. open your web browser to localhost:8000
+1. `git clone https://github.com/cocupu/bindery-ui`
+1. `cd bindery-ui`
+1. `sudo npm install -g lineman`
+1. `npm install`
+1. `bower install`
+1. `lineman run`
+1. open your web browser to localhost:8000
 
 # Running Tests
 
@@ -52,33 +53,3 @@ To run the end-to-end tests:
     If you see this error: Fatal error: The path to the driver executable must be set by the
     webdriver.chrome.driver system property, you may need to download the chromedriver
     (https://code.google.com/p/selenium/wiki/ChromeDriver) and place it in /usr/local/bin (mac).
-
-# Defining your apps angular.module in CoffeeScript
-
-If you are using Coffeescript to define the angular.module for your app, you will need to swap the concat order in `config/application.js` such that coffeescript files are included _before_ javascript, here's a sample config. (If you are using JavaScript for defining the angular.module the default concat order is fine).
-
-Replace `config/application.js` with the following if you want to define your app module in coffeescript:
-
-```javascript
-/* Exports an object that defines
- *  all of the configuration needed by the projects'
- *  depended-on grunt tasks.
- *
- * You can find the parent object in: node_modules/lineman/config/application.coffee
- */
-
-module.exports = require(process.env['LINEMAN_MAIN']).config.extend('application', {
-  concat_sourcemap: {
-    js: {
-      src: [
-        "<%= files.js.vendor %>",
-        "<%= files.coffee.generated %>",
-        "<%= files.js.app %>",
-        "<%= files.ngtemplates.dest %>"
-      ]
-    }
-  }
-});
-```
-
-Hopefully this helps you get up and running with AngularJS!

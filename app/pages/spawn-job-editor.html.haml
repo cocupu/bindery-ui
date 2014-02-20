@@ -1,0 +1,61 @@
+
+
+.spawning-editor{"ng-hide"=>"spreadsheet.rows"}
+  %h1 Spawning Configuration
+  .panel.panel-default.loading
+    .panel-body
+      %p DataBindery is preparing your spreadsheet.  This should only take a few moments.
+
+.spawning-editor{"ng-show"=>"spreadsheet.rows"}
+  %h1 Spawning Configuration
+  {{spreadsheet.title}} ({{spreadsheet.totalRows}} rows)
+
+  %div.headerGrid{"ng-grid"=>"headerGridOptions"}
+  %div.gridStyle.preview{"ng-grid"=>"gridOptions"}
+
+
+  .row{"ng-show"=>"spreadsheet.rows"}
+    .span1
+    .span6
+      %button.btn.btn-primary.pull-right{type:"submit", "ng-hide"=>"mappingTemplate.id", "ng-click"=>"createMappingTemplate(mappingTemplate)"} Create this Mapping Template
+      %button.btn.btn-primary.pull-right{type:"submit", "ng-show"=>"mappingTemplate.id", "ng-click"=>"updateMappingTemplate(mappingTemplate)"} Save Changes to Mapping Template
+      %h3 Model
+      %form
+        .entityName
+          %label Each row should be spawned as a
+          %input{"ng-model"=>"mappingTemplate.model_mappings[0].name"}
+        %fieldset
+          %legend Fields & Labels
+          %table
+            %table-head
+              %th Title
+              -#%th Field Code
+              %th Label
+              %th Type
+            %tr{"ng-repeat"=>"field_mapping in mappingTemplate.model_mappings[0].field_mappings"}
+              %td
+                %input{type: "radio", "ng-model"=>"mappingTemplate.model_mappings[0].label", value:"{{$index}}"}
+              -#%td
+              -#  %input{"ng-model"=>"field_mapping.field"}
+              %td
+                %input{"ng-model"=>"field_mapping.label"}
+              %td
+                %select.operator{ "ng-model"=>"field_mapping.type"}
+                  %option{value:"text", selected:true} Text
+                  %option{value:"textarea"} Text Area
+                  %option{value:"date"} Date
+
+    .span7
+      %button.btn.btn-primary.pull-right{type:"submit", "ng-show"=>"mappingTemplate.id", "ng-click"=>"spawn(mappingTemplate, spreadsheet)"} Spawn using this Config
+      -#%a.btn.btn-primary.pull-right{"target"=>"_self", "ng-show"=>"mappingTemplate.id", "ng-href"=>"{{context.poolUrl}}/spawn_jobs/new?source_node_id={{spreadsheet.node_version_id}}&classic=true&mapping_template_id={{mappingTemplate.id}}&skip_decompose=true"} Spawn using this Config
+      %h3 Preview
+      %ul
+        %li Each row will be spawned as a {{mappingTemplate.model_mappings[0].name}}.
+        %li{"ng-show"=>"mappingTemplate.model_mappings[0].label"} The title will come from the {{mappingTemplate.model_mappings[0].field_mappings[mappingTemplate.model_mappings[0].label].label}} column.
+      %div{"ng-repeat"=>"row in sampleRows"}
+        %h4{"ng-hide"=>"mappingTemplate.model_mappings[0].label"} {{mappingTemplate.model_mappings[0].name + " " +$index}}
+        %h4{"ng-show"=>"mappingTemplate.model_mappings[0].label"} {{row[mappingTemplate.model_mappings[0].label]}}
+        %dl.dl-horizontal.dl-invert
+          %span{"ng-repeat"=>"value in row"}
+            %dt {{mappingTemplate.model_mappings[0].field_mappings[$index].label}}
+            %dd {{value}} &nbsp;
