@@ -1,17 +1,8 @@
-# A Lineman JS Template using Angular
+# bindery-ui: AngularJS Frontend for DataBindery API Platform
 
-[![Build Status](https://travis-ci.org/linemanjs/lineman-angular-template.png?branch=master)](https://travis-ci.org/linemanjs/lineman-angular-template)
-
-This is a project template for Angular JS applications using [Lineman](http://www.linemanjs.com).
-
-It includes the following features:
+This code base inherits the following features from the lineman-angular-template:
 
 1. Template Precompilation into Angulars $templateCache using `grunt-angular-templates`
-2. A basic login, logout service bound to sample routes inside `config/server.js`
-3. A router, and 2 views `home` and `login`
-4. A directive that shows a message on mouseover
-5. 2 Controllers, for `home` and `login`, with $scope variables set and bound
-6. A working, bound login form (username/password don't matter, but are required)
 7. Configured [grunt-ngmin](https://github.com/btford/grunt-ngmin) so you don't have to fully qualify angular dependencies.
 8. Auto generated [sourcemaps](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/) with inlined sources via [grunt-concat-sourcemap](https://github.com/kozy4324/grunt-concat-sourcemap) (you'll need to [enable sourcemaps](http://cl.ly/image/1d0X2z2u1E3b) in Firefox/Chrome to see this)
 9. [Unit Tests](https://github.com/davemo/lineman-angular-template/tree/master/spec) and [End-to-End Tests](https://github.com/davemo/lineman-angular-template/tree/master/spec-e2e)
@@ -28,8 +19,6 @@ It includes the following features:
 1. open your web browser to localhost:8000
 
 # Running Tests
-
-This template was used as the basis of [@davemo](http://www.github.com/davemo)'s [Testing Strategies for Angular JS](http://www.youtube.com/watch?v=UYVcY9EJcRs) screencast, and contains all the tests we wrote in the screencast and a few more!
 
 To run the unit tests:
 
