@@ -1,3 +1,7 @@
+#  NOTE: I tried rewriting context_service.coffee as a CoffeeScript Class, but it's raising an error because the dependencies (BinderyPool & BinderyIdentity) aren't getting injected.
+#  In the meantime, relying on context_service.coffee, which functions the same but the code is ugly.
+#
+#
 # class ContextService
 # 	constructor: (BinderyPool, BinderyIdentity) ->
 # 	
