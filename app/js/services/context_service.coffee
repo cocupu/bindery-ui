@@ -1,17 +1,19 @@
-angular.module('curateDeps').factory('ContextService', ['BinderyPool', 'BinderyIdentity', (BinderyPool, BinderyIdentity) ->
-  contextService = {pool:"", poolOwner:""}
-
-  contextService.initialize = (identityName, poolName) ->
+# Tracks context within DataBindery
+# particularly the current Identity, Pool, and corresponding base URL for requests
+class ContextService extends AngularBaseService
+  # @register angular.module('curateDeps')
+  @inject 'BinderyPool', 'BinderyIdentity'
+  
+  initialize: (identityName, poolName) ->
     # Only load resources if identityName is actually set
     if identityName
-      contextService.identityName = identityName
-      contextService.poolName = poolName
-      contextService.poolUrl = "/"+identityName+"/"+poolName
-      contextService.pool = BinderyPool.get({identityName: identityName, poolName: poolName}, (data) ->
-        contextService.pool.identity_name = identityName
-        contextService.poolOwner = BinderyIdentity.get({name:data.owner_id})
-        contextService.pool.fields()
+      @identityName = identityName
+      @poolName = poolName
+      @poolUrl = "/"+@identityName+"/"+@poolName
+      @pool = @BinderyPool.get({identityName: identityName, poolName: poolName}, (data) ->
+        @pool.identity_name = identityName
+        @poolOwner = @BinderyIdentity.get({name:data.owner_id})
+        @pool.fields()
       )
 
-  return contextService
-])
+angular.module('curateDeps').service('ContextService', ['BinderyPool', 'BinderyIdentity', ContextService])

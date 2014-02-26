@@ -1,4 +1,4 @@
-class BinderySearchService
+class BinderySearchService extends AngularBaseService
 	constructor: (context, $http) ->
 		@pagingOptions = {
 	    pageSizes: [25, 50, 100, 250, 500, 1000],
@@ -29,7 +29,7 @@ class BinderySearchService
         ft = searchText.toLowerCase()
       else
         ft = ""
-      $http.get(context.poolUrl, {
+      $http.get(context.binderyBaseUrl + context.poolUrl, {
         params: @queryParams
       }).success( (data) ->
         setPagingData(data,page,pageSize);

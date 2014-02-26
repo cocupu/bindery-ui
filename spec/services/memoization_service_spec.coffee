@@ -12,7 +12,6 @@ describe "service: MemoizationService", ->
     Then 	-> expect(@memoService.lookup('BinderyNode', 4)).toBe( @item1 )
     When  -> @memoService.createOrUpdate('BinderyModel', @item2)
     Then 	-> expect(@memoService.lookup('BinderyModel', 5)).toBe( @item2 )
-    # TODO:  chokes when testing #createOrUpdate with arrays
-    # When  -> @memoService.createOrUpdate('BinderyModel', [@item2, @item3])
-    # Then  -> expect(@memoService.lookup('BinderyModel', 5)).toBe( @item2 )
-    # Then  -> expect(@memoService.lookup('BinderyModel', 10)).toBe( @item3 )
+    When  -> @memoService.createOrUpdate('BinderyModel', [@item2, @item3])
+    Then  -> expect(@memoService.lookup('BinderyModel', 5)).toBe( @item2 )
+    Then  -> expect(@memoService.lookup('BinderyModel', 10)).toBe( @item3 )

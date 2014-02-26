@@ -1,8 +1,9 @@
 describe "service: BinderySearchService", ->
 
   Given -> module("app")
-	# Given -> module ($provide) =>
-	# 	$provide.value("contextService", {"poolUrl":"/fooId/barPool"})
+  # Given -> module( ($provide) ->
+  #   $provide.factory("contextService", {"poolUrl":"/fooId/barPool"} )
+  # )
 	
   Given -> inject ($http, @BinderySearchService) =>
 		# @BinderySearchService.context.initialize("foo", "poolBar") 
