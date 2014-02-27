@@ -1,12 +1,11 @@
 describe "service: BinderySearchService", ->
 
   Given -> module("app")
-  # Given -> module( ($provide) ->
-  #   $provide.factory("contextService", {"poolUrl":"/fooId/barPool"} )
-  # )
+      
+  Given -> module ($provide) -> 
+    $provide.constant('ContextService', {"binderyBaseUrl":"localhost:5555", "poolUrl":"/fooId/barPool"}) 
 	
-  Given -> inject ($http, @BinderySearchService) =>
-		# @BinderySearchService.context.initialize("foo", "poolBar") 
+  Given -> inject (@ContextService, $http, @BinderySearchService) =>
     @$httpPost = spyOn($http, 'post')
     @$httpGet  = spyOn($http, 'get')
 
@@ -15,5 +14,6 @@ describe "service: BinderySearchService", ->
     Then   -> expect(@BinderySearchService.queryParams.rows).toBe(25)
 		
   describe "#runQuery", ->
-    When -> @BinderySearchService.runQuery()
-    # Then -> expect(@$httpPost).toHaveBeenCalledWith('/fooId/barPool', {"rows":25})
+    # When -> @BinderySearchService.runQuery(25, 0, "")
+    # Then -> expect(@$httpGet.calls).toBe("")
+    # Then -> expect(@$httpGet).toHaveBeenCalledWith('localhost:5555/fooId/barPool', {"rows":25, page:1, q:""})

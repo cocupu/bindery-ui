@@ -1,7 +1,7 @@
 # Tracks context within DataBindery
 # particularly the current Identity, Pool, and corresponding base URL for requests
-class ContextService extends AngularBaseService
-  # @register angular.module('curateDeps')
+class ContextService extends AngularService
+  @register angular.module('curateDeps')
   @inject 'BinderyPool', 'BinderyIdentity'
   
   initialize: (identityName, poolName) ->
@@ -15,5 +15,3 @@ class ContextService extends AngularBaseService
         @poolOwner = @BinderyIdentity.get({name:data.owner_id})
         @pool.fields()
       )
-
-angular.module('curateDeps').service('ContextService', ['BinderyPool', 'BinderyIdentity', ContextService])

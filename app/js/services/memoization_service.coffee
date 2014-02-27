@@ -1,8 +1,8 @@
-class MemoService extends AngularBaseService
-  # @register angular.module('curateDeps')
-  # @inject 
+class MemoService extends AngularService
+  @register angular.module('curateDeps')
+  @cache = {}
   
-  constructor: () ->
+  initialize: ->
     @cache = {}
   
   lookup: (model, objectId) ->
@@ -24,5 +24,3 @@ class MemoService extends AngularBaseService
   ensureInitialized: (model) ->
     if typeof(@cache[model]) == "undefined"
       @cache[model] = {}
-    
-angular.module('curateDeps').service('memoService', ['BinderyPool', 'BinderyIdentity', MemoService])

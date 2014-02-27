@@ -1,5 +1,8 @@
-class BinderySearchService extends AngularBaseService
-	constructor: (context, $http) ->
+class BinderySearchService extends AngularService
+	@register angular.module('curateDeps')
+	@inject 'ContextService', '$http'
+	
+	constructor: () ->
 		@pagingOptions = {
 	    pageSizes: [25, 50, 100, 250, 500, 1000],
 	    defaultPageSize: 25
@@ -23,17 +26,18 @@ class BinderySearchService extends AngularBaseService
     @docs = data.docs
     @totalServerItems = data.response.numFound
 
-  runQuery: (pageSize, page, searchText) ->
+  runQuery: () ->
+    
     setTimeout( (() ->
       if (searchText)
         ft = searchText.toLowerCase()
       else
         ft = ""
-      $http.get(context.binderyBaseUrl + context.poolUrl, {
+      @$http.get(@ContextService.binderyBaseUrl + @ContextService.poolUrl, {
         params: @queryParams
       }).success( (data) ->
-        setPagingData(data,page,pageSize);
+        setPagingData(data,@queryParams.page,@queryParams.rows);
       )
     ), 100)
 	
-angular.module('curateDeps').service('BinderySearchService', ['ContextService', '$http', BinderySearchService])
+# angular.module('curateDeps').service('BinderySearchService', ['ContextService', '$http', BinderySearchService])
