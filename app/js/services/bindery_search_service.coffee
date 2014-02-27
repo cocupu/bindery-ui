@@ -1,6 +1,6 @@
 class BinderySearchService extends AngularService
   @register angular.module('curateDeps')
-  @inject 'ContextService', '$http'
+  @inject 'ContextService', 'BinderyNode', '$http'
 	
   initialize: () ->
     @pagingOptions = {
@@ -25,14 +25,15 @@ class BinderySearchService extends AngularService
       @queryParams.q = ""
     @$http.get(@ContextService.binderyBaseUrl + @ContextService.poolUrl, {
       params: @queryParams
-    }).success( (data) ->
-      @setPagingData(data,@queryParams.page,@queryParams.rows);
+    }).success( (data) =>
+      @processResults(data);
     )
     # ), 100)
     
-	processResults: (data, page, pageSize) ->
+  processResults: (data) ->
     angular.forEach(data.docs, (item, idx) ->
-      data.docs[idx] = new BinderyNode(item)  #<-- replace each item with an instance of the resource object
+      console.log(@BinderyNode)
+      data.docs[idx] = new @BinderyNode(item)  #<-- replace each item with an instance of the resource object
     )
     @searchResponse = data
     @docs = data.docs
