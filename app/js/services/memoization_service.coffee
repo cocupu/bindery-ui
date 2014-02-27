@@ -1,6 +1,5 @@
 class MemoService extends AngularService
   @register angular.module('curateDeps')
-  @cache = {}
   
   initialize: ->
     @cache = {}

@@ -14,7 +14,9 @@ class @AngularService
     @$inject = args
  
   constructor: (args...) ->
+    # console.log(@constructor.$inject)
+    # console.log(args)
     for key, index in @constructor.$inject
       @[key] = args[index]
- 
+      
     @initialize?()
