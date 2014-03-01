@@ -1,0 +1,34 @@
+/*
+ *= require 'blacklight'         
+ *
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require_self
+ * ----> Note the missing = require_tree
+ *= require bootstrap
+ *= require bootstrap-tideover
+ *= require typography
+ *= require main
+ *= require exhibits
+ *= require models
+ *= require model_instances
+ *= require mapping_templates
+ *= require drives
+ *= require forms
+ *= require pools
+ *= require welcome
+ *= require pool_searches
+ *= require spawn_jobs
+ *= require grid_edit
+ *= require headsup
+ *= depend_on _common
+ *= require jquery-ui/themes/base/jquery.ui.core
+ *= require ng-grid
+ *= require token-input
+ *= require token-input-facebook
+*/
+
+
+
+

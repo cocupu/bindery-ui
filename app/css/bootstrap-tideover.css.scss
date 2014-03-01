@@ -1,0 +1,52 @@
+// Stuff to tide over until we upgrade to Bootstrap 3.x (blocked by Blacklight!)
+
+.panel {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
+.panel-heading {
+  padding: 1px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+
+.panel-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+}
+
+.panel-body {
+  padding: 15px;
+}
+
+.panel-default {
+  border-color: #ddd;
+
+  .panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+  }
+}
+
+.panel-primary {
+  border-color: #BED2DD;
+  .panel-heading {
+    color: #000;
+    background-color: #BED2DD;
+    border-color: #BED2DD;
+  }
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}

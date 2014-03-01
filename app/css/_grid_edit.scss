@@ -1,0 +1,55 @@
+
+
+.gridStyle {
+  border: 1px solid rgb(212,212,212);
+  //width: 400px;
+  height: 270px
+}
+
+.grid-w-headsup {
+  form.search-query-form {
+    margin: 0;
+    select, .input-append {
+      margin-bottom: 0;
+    }
+  }
+  .search-query-form {
+    padding-left:25px;
+    margin-right:5px;
+  }
+  #documents {
+    margin-top: 0.25em;
+  }
+}
+#documents.grid {
+
+  background: {
+    image: url('theme/background.jpg');
+    color:ghostwhite;
+  }
+  td {
+    padding: 5px;
+  }
+  .documentHeader {
+    th {
+      white-space: nowrap;
+      font: {
+        weight: bold;
+      }
+    }
+  }
+
+  tr {
+    border-bottom: 2px dotted white;
+  }
+  .document {
+    td {
+      vertical-align: top;
+      border:2px solid ghostwhite;
+      background-color: white;
+      .value {
+        background-color: white;
+      }
+    }
+  }
+}

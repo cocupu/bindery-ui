@@ -1,0 +1,15 @@
+// Place all the styles related to the spreadsheet_rows controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+table#data {
+  clear:both ;
+  td {
+    white-space: nowrap;
+  }
+  td.wrappable {
+    white-space: normal;
+    width: 200px;
+  }
+}
+

@@ -1,0 +1,49 @@
+@mixin rounded($amount) {
+  -moz-border-radius: $amount;
+  -webkit-border-radius: $amount;
+  border-radius: $amount;
+}
+
+@mixin background_gradient($pos, $start, $end) {
+  /* Safari 5.1, Chrome 10+ */
+  background: -webkit-linear-gradient($pos, $start, $end);
+  
+  /* Firefox 3.6+ */
+  background: -moz-linear-gradient($pos, $start, $end);
+  
+  /* IE 10 */
+  background: -ms-linear-gradient($pos, $start, $end);
+}
+
+@mixin box_shadow( ) {
+  -webkit-box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+  -moz-box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+@mixin inset_box_shadow( ) {
+  -webkit-box-shadow: 0px 3px 2px rgba(0,0,0,0.07) inset;
+  -moz-box-shadow: 0px 3px 2px rgba(0,0,0,0.07) inset;
+  box-shadow: 0px 3px 2px rgba(0,0,0,0.07) inset;
+}
+
+@mixin zebra_stripe( ) {
+  border-collapse: collapse;
+  border: 2px solid black;
+  td, th {
+    border-left: 1px solid #888;
+    border-right: 1px solid #888;
+    padding: 2px;
+  }
+  thead {
+    background-color: #aaa;
+  }
+  tbody {
+    tr {
+      background-color: #ccc;
+    }
+    tr:nth-child(2n+1) {
+      background-color: #f0f0f0;
+    }
+  }
+}

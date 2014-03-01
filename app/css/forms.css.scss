@@ -1,0 +1,31 @@
+input, textarea, .uneditable-input {
+  padding-left: 5px;
+}
+
+// Select Control for choosing operator (ie. on Search Filters)
+select.operator {
+  width: 5.25em;
+}
+
+form {
+
+  li {
+    label {
+      width: 150px;
+      display: inline-block;
+    }
+  }
+  
+  &.metadata {
+    input, textarea,.uneditable-input {
+        width: 406px;
+    }
+  }
+
+  .remove {
+    font-size: 1.75em;
+    padding-bottom: 0.5em;
+    padding-left:0.25em;
+  }
+}
+

@@ -1,0 +1,23 @@
+// Place all the styles related to the spawn_jobs controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.headerGrid .ngViewport {
+  display: none;
+}
+.gridStyle.preview {
+  height: 180px;
+  .ngTopPanel {
+    display: none;
+  }
+}
+.spawning-editor {
+  margin-left: 10px;
+  margin-right: 10px;
+  .panel.loading {
+    width: 80%;
+  }
+  .entityName input {
+    width: 90%;
+  }
+}
