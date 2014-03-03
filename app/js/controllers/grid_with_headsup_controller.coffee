@@ -1,17 +1,25 @@
 # Editable Grid with Headsup
-GridWithHeadsupCtrl = ($scope, $http, $location, BinderyModel, BinderyNode, memoService) ->
+GridWithHeadsupCtrl = ($scope, $stateParams, $http, $location, BinderyModel, BinderyNode, memoService, context, SearchService) ->
 
   # General Scope properties
-  $scope.poolUrl = $location.path().replace("/search", "")
+  context.initialize($stateParams.identityName, $stateParams.poolName)
+  $scope.stateParams = $stateParams
+
+  # $scope.poolUrl = $location.path().replace("/search", "")
+  $scope.poolUrl = context
   $scope.selectedNodes = []
   $scope.currentNode = {}
-  $scope.currentModelId = $("#model-chooser .active").data("model-id")
   $scope.currentModel = {}
-  $scope.currentModel = BinderyModel.get({modelId:$scope.currentModelId}, (m, getResponseHeaders) ->
+  $scope.currentModel = BinderyModel.get({modelId:SearchService.model_id}, (m, getResponseHeaders) ->
     memoService.createOrUpdate("BinderyModel", m)
     $scope.columnDefs = m.columnDefsFromModel()
   )
 
+  $scope.queryParams = () -> SearchService.queryParams()
+  $scope.searchResponse = SearchService.data
+  $scope.docs = SearchService.docs
+  $scope.totalServerItems = SearchService.totalServerItems
+  
   $scope.searchUrl = $location.path()+".json"
   $scope.detailPanelState = "node"
   $scope.infoPanelState = "default"
@@ -111,7 +119,7 @@ GridWithHeadsupCtrl = ($scope, $http, $location, BinderyModel, BinderyNode, memo
   # ng-grid Configs
   #
   $scope.columnDefs = []
-  $scope.columnDefsFromModel = () -> $scope.currentModel.columnDefs()
+  $scope.columnDefsFromModel = () -> $scope.currentModel.columnDefsFromModel()
 
   $scope.filterOptions =
     filterText: "",
@@ -122,47 +130,28 @@ GridWithHeadsupCtrl = ($scope, $http, $location, BinderyModel, BinderyNode, memo
     pageSizes: [25, 50, 100, 250, 500, 1000],
     pageSize: 25,
     currentPage: 1
-
-  $scope.setPagingData = (data, page, pageSize) ->
-#      pagedData = data.aaData.slice((page - 1) * pageSize, page * pageSize)
-    angular.forEach(data.docs, (item, idx) ->
-      data.docs[idx] = new BinderyNode(item)  #<-- replace each item with an instance of the resource object
+    
+  $scope.runQuery = () ->
+    SearchService.pagingOptions.pageSize = $scope.pagingOptions.pageSize
+    SearchService.pagingOptions.currentPage = $scope.pagingOptions.currentPage
+    SearchService.queryString = $scope.filterOptions.filterText
+    SearchService.runQuery().then( (data) -> 
+      $scope.docs = SearchService.docs 
+      $scope.totalServerItems = SearchService.totalServerItems
+      if (!$scope.$$phase)
+        $scope.$apply()
     )
-    $scope.searchResponse = data
-    $scope.docs = data.docs;
-    $scope.totalServerItems = data.response.numFound;
-    if (!$scope.$$phase)
-      $scope.$apply()
-
-  $scope.getPagedDataAsync = (pageSize, page, searchText) ->
-    setTimeout( (() ->
-      if (searchText)
-        ft = searchText.toLowerCase()
-      else
-        ft = ""
-      $http.get($scope.searchUrl, {
-        params: {
-          model_id: $scope.currentModelId
-          view: "grid"
-          rows: pageSize
-          page: page
-          q: searchText
-        }
-      }).success( (data) ->
-        $scope.setPagingData(data,page,pageSize);
-      )
-    ), 100)
-
-  $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage)
-
+    
+  $scope.runQuery()
+      
   $scope.$watch('pagingOptions', ((newVal, oldVal) ->
     if (newVal != oldVal && newVal.currentPage != oldVal.currentPage)
-      $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText)
+      $scope.runQuery()
   ), true)
 
   $scope.$watch('filterOptions', ((newVal, oldVal) ->
     if (newVal != oldVal)
-      $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+      $scope.runQuery()
   ), true);
 
 
@@ -209,5 +198,5 @@ GridWithHeadsupCtrl = ($scope, $http, $location, BinderyModel, BinderyNode, memo
     $scope.resizeGrid()
   )
 
-GridWithHeadsupCtrl.$inject = ['$scope', '$http', '$location', 'BinderyModel', 'BinderyNode', 'memoService']
+GridWithHeadsupCtrl.$inject = ['$scope', '$stateParams', '$http', '$location', 'BinderyModel', 'BinderyNode', 'MemoService', 'ContextService', 'BinderySearchService']
 angular.module("curateDeps").controller('GridWithHeadsupCtrl', GridWithHeadsupCtrl)

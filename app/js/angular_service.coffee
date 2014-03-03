@@ -14,9 +14,10 @@ class @AngularService
     @$inject = args
  
   constructor: (args...) ->
-    # console.log(@constructor.$inject)
-    # console.log(args)
+    # console.log("With $inject: "+@constructor.$inject)
     for key, index in @constructor.$inject
+      # console.log("  injecting "+key)
+      console.log(args[index])
       @[key] = args[index]
       
     @initialize?()

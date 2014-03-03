@@ -1,8 +1,10 @@
 @import "common";
 @import "grid_edit";
+@import "headsup";
 
 body {
   color: #333;
+  padding-top: 50px;
   /* text-shadow: 0 1px 0 white; */
 }
 

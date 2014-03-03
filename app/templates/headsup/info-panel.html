@@ -1,0 +1,11 @@
+<div class='panel panel-default info'>
+  <div class='panel-header' ng-show='selectedNodes.length &gt; 0'>
+    <h3>Items that Reference this</h3>
+  </div>
+  <div class='panel-body'>
+    <div ng-repeat='node in selectedNodes[0].inbound_associations()'>
+      <b>{{node.model().name}}</b>
+      <span>{{node.title}}</span>
+    </div>
+  </div>
+</div>

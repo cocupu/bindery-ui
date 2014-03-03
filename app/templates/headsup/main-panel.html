@@ -1,0 +1,51 @@
+<div class='panel panel-default detail selectedItems node' ng-hide='selectedNodes.length &gt; 0'>
+  <div class='panel-body'>
+    <div class='emptyMessage'>
+      Select a cell to see details here.
+    </div>
+  </div>
+</div>
+<div class='panel panel-default detail selectedItems node' ng-repeat='node in selectedNodes'>
+  <div class='panelHeader panel-header'>
+    <h3>{{node.title}}</h3>
+    <div class='persistent-id'>
+      pid:
+      <a ng-href='{{poolUrl}}/results/{{node.persistent_id}}' target='_self'>{{node.persistent_id}}</a>
+    </div>
+    <span class='savedIndicator' ng-switch on='node.dirty'>
+      <span class='message' ng-switch-when='true'>You have unsaved changes</span>
+      <span class='message' ng-switch-when='false'>Saved at: {{node.lastUpdated}}</span>
+    </span>
+    <button class='btn btn-default pull-right' ng-click='updateNode(node)' type='button'>Save Changes</button>
+  </div>
+  <form class='node-editor panel-body'>    
+    <div class='field clearfix' ng-repeat='fieldConfig in node.model().fields.concat(node.model().associations)'>
+      <label>
+        {{fieldConfig.name}}
+        <span class='field-helper' ng-show="fieldConfig.type == 'date'">{{node.data[fieldConfig.code]}}</span>
+      </label>
+      <span ng-switch on='fieldConfig.type'>
+        <textarea class='fieldControl colt{{$index}} col{{$index}}' id="{{node.persistent_id+'_'+fieldConfig.code}}" ng-focus='focusOnField(fieldConfig)' ng-model='node.data[fieldConfig.code]' ng-switch-when='textarea'></textarea>
+        <input class='fieldControl colt{{$index}} col{{$index}}' id="{{node.persistent_id+'_'+fieldConfig.code}}" ng-focus='focusOnField(fieldConfig)' ng-model='node.data[fieldConfig.code]' ng-switch-when='date' type='date'>
+        <input bindery-token-input='nodeTokeninputOptions' class='fieldControl colt{{$index}} col{{$index}}' data-field-config='{{fieldConfig}}' data-url="searchUrl+'?rows=100&amp;model_id='+fieldConfig.references" id="{{node.persistent_id+'_'+fieldConfig.code}}" multiple ng-focus='focusOnField(fieldConfig)' ng-model='node.associations[fieldConfig.code]' ng-switch-when='Has Many'>
+        <input class='fieldControl colt{{$index}} col{{$index}}' id="{{node.persistent_id+'_'+fieldConfig.code}}" ng-focus='focusOnField(fieldConfig)' ng-model='node.data[fieldConfig.code]' ng-switch-default='true'>
+      </span>
+    </div>
+    <div class='file-entity clearfix' ng-show='node.file_entity'>
+      <div class='media-display' ng-switch on='node.file_type'>
+        <audio controls ng-switch-when='audio'>
+          <source ng-src='{{node.download_url()}}' type='audio/mpeg'></source>
+        </audio>
+        <video controls ng-switch-when='video'>
+          <source ng-src='{{node.download_url()}}' type='video/mp4'></source>
+        </video>
+      </div>
+      <div class='spawn-action' ng-show='node.spawnable'>
+        <a ng-href='/matt/footest/spawn_jobs/new?source_node_id={{node.persistent_id}}' target='_self'>Spawn entities from each row of this file</a>
+      </div>
+      <div class='download-link'>
+        <a ng-href='{{node.download_url()}}' target='_self'>Download ({{(node.data.file_size*.00000095367).toFixed(2)}}MB)</a>
+      </div>
+    </div>
+  </form>
+</div>

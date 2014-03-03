@@ -1,0 +1,101 @@
+<ng-switch on='supplementalPanelState'>
+  <div class='panel panel-default info supplemental node' ng-switch-default='true'></div>
+  <div class='panel panel-default info supplemental node' ng-switch-when='node'>
+    <div class='panelHeader panel-header'>
+      <h3>{{supplementalNode.title}}</h3>
+    </div>
+    <form class='node-editor panel-body'>
+      <div class='field clearfix' ng-repeat='fieldConfig in supplementalNode.model().fields.concat(supplementalNode.model().associations)'>
+        <label>
+          {{fieldConfig.name}}
+          <span class='field-helper' ng-show="fieldConfig.type == 'date'">{{supplementalNode.data[fieldConfig.code]}}</span>
+        </label>
+        <span ng-switch on='fieldConfig.type'>
+          <p class='fieldControl colt{{$index}} col{{$index}}' id="{{supplementalNode.persistent_id+'_'+fieldConfig.code}}" ng-focus='focusOnField(fieldConfig)' ng-model='supplementalNode.data[fieldConfig.code]' ng-switch-when='textarea'>
+            {{supplementalNode.data[fieldConfig.code]}}
+          </p>
+          <div class='fieldControl colt{{$index}} col{{$index}}' id="{{supplementalNode.persistent_id+'_'+fieldConfig.code}}" ng-focus='focusOnField(fieldConfig)' ng-model='supplementalNode.data[fieldConfig.code]' ng-switch-when='date' type='date'>
+            {{supplementalNode.data[fieldConfig.code]}}
+          </div>
+          <input bindery-token-input='nodeTokeninputOptions' class='fieldControl colt{{$index}} col{{$index}}' data-field-config='{{fieldConfig}}' data-url="searchUrl+'?rows=100&amp;model_id='+fieldConfig.references" id="{{supplementalNode.persistent_id+'_'+fieldConfig.code}}" multiple ng-focus='focusOnField(fieldConfig)' ng-model='supplementalNode.associations[fieldConfig.code]' ng-switch-when='Has Many'>
+          <div class='fieldControl colt{{$index}} col{{$index}}' id="{{supplementalNode.persistent_id+'_'+fieldConfig.code}}" ng-focus='focusOnField(fieldConfig)' ng-model='supplementalNode.data[fieldConfig.code]' ng-switch-default='true'>
+            {{supplementalNode.data[fieldConfig.code]}}
+          </div>
+        </span>
+      </div>
+    </form>
+  </div>
+  <div class='panel panel-default info supplemental field' ng-switch-when='field'>
+    <div class='panelHeader panel-header'>
+      <h3>{{focusedField.name}}</h3>
+      <a class='pull-right config-field' ng-click='configField(focusedField)'>configure field</a>
+    </div>
+    <div class='panel-body'>
+      <dl class='list-group'>
+        <dt class='short'>Current value:</dt>
+        <dd class='short'>{{selectedNodes[0].data[focusedField.code] || "not set"}}</dd>
+        <dt class='short'>Type</dt>
+        <dd class='short'>{{focusedField.type || "not set"}}</dd>
+        <dt>
+          Limit Search by
+          <span class='knock-back'>{{focusedField.name}}</span>
+        </dt>
+        <dd>
+          <bindery-facet-values class='list-group facets' data-field='focusedField' values="searchResponse.facet_counts.facet_fields[focusedField.code+'_facet']"></bindery-facet-values>
+        </dd>
+        <dt>Description</dt>
+        <dd>{{focusedField.description}}</dd>
+      </dl>
+    </div>
+  </div>
+  <div class='panel panel-default info supplemental model' ng-switch-when='model'>
+    <div class='panel-body' ng-hide='selectedNodes.length &gt; 0'>
+      <div class='emptyMessage'>
+        Select a cell to see details here.
+      </div>
+    </div>
+    <div class='panelHeader panel-header' ng-show='currentModel &amp;&amp; (selectedNodes.length &gt; 0)'>
+      <h3>{{currentModel.name}}</h3>
+      <span class='savedIndicator' ng-switch on='currentModel.dirty'>
+        <span class='message' ng-switch-when='true'>You have unsaved changes</span>
+        <span class='message' ng-switch-when='false'>Saved at: {{currentModel.lastUpdated}}</span>
+      </span>
+      <a ng-click='currentModel.addField()'>Add Field</a>
+      <a ng-click='currentModel.addAssociation()'>Add Association</a>
+      <button class='btn btn-default pull-right' ng-click='updateModel(currentModel)' type='button'>Save Model</button>
+    </div>
+    <form class='model-editor panel-body' ng-show='currentModel &amp;&amp; (selectedNodes.length &gt; 0)'>
+      <div class='clearfix' id="{{'modelField_'+fieldConfig.code}}" ng-repeat='fieldConfig in currentModel.fields.concat(currentModel.associations)'>
+        <h4>{{fieldConfig.name}}</h4>
+        <div class='field clearfix'>
+          <label class='pull-left'>Label</label>
+          <input id="{{'modelField_'+fieldConfig.code+'_name'}}" ng-model='fieldConfig.name'>
+        </div>
+        <div class='field clearfix'>
+          <label class='pull-left'>Code</label>
+          <div class='value'>{{fieldConfig.code}}</div>
+        </div>
+        <div class='field clearfix'>
+          <label class='pull-left'>Type</label>
+          <select ng-model='fieldConfig.type' ng-options='item.id as item.label for item in typeOptionsFor(fieldConfig.type)'></select>
+        </div>
+        <div class='animate-hide clearfix field' ng-show="fieldConfig.type == 'Has Many'">
+          <label class='pull-left'>References</label>
+          <input ng-model='fieldConfig.references'>
+        </div>
+        <div class='field clearfix'>
+          <label class='pull-left'>URI</label>
+          <div class='value'>{{fieldConfig.uri}}</div>
+        </div>
+        <div class='field clearfix'>
+          <label class='pull-left'>Multivalue</label>
+          <input ng-model='fieldConfig.multivalue' type='checkbox'>
+        </div>
+        <div class='field clearfix'>
+          <label class='pull-left'>Description</label>
+          <textarea ng-model='fieldConfig.description'></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-switch>

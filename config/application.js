@@ -6,6 +6,20 @@
  */
 
 module.exports = require(process.env['LINEMAN_MAIN']).config.extend('application', {
+  enableSass: true,
+  sass: {
+    options: {
+      bundleExec: true
+    }
+  },
+  server: {
+    pushState: true,
+    apiProxy: {
+      enabled: true,
+      port: 8080,
+      prefix: '/'
+    }
+  },
   watch: {
 	  scripts: {
 	    files: ["<%= files.js.app %>"],

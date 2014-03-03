@@ -1,11 +1,11 @@
 {
-  "name": "lineman-angular-template",
-  "title": "An HTML/JS/CSS app using Angular.JS",
+  "name": "bindery-ui",
+  "title": "AngularJS Frontend for DataBindery API Platform",
   "version": "0.0.1",
   "private": true,
   "author": {
-    "name": "John Doe",
-    "company": "ACME, Inc."
+    "name": "Matthew Zumwalt",
+    "company": "CoCuPu LLC."
   },
   "_comment": {
     "jquery": "<2.0.0",
@@ -20,8 +20,7 @@
     "blueimp-load-image": "~1.11.0"
   },
   "dependencies": {
-    "angular": "=1.2.9",
-    "ng-grid": ""
+    "angular": "=1.2.9"
   },
   "devDependencies": {
     "protractor": ">=0.8.0",
