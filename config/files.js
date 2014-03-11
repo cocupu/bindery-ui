@@ -14,9 +14,8 @@
 module.exports = require(process.env['LINEMAN_MAIN']).config.extend('files', {
   js: {
     vendor: [
-      "vendor/bower/jquery/jquery.js",
-			"vendor/bower/jquery-ui/jquery-ui.js",
-			"vendor/bower/jquery-ui/jquery-scrollTo-min.js",
+      "vendor/bower/jquery/dist/jquery.js",
+			"vendor/bower/jquery-ui/ui/jquery-ui.js",
       "vendor/bower/bootstrap/dist/js/bootstrap.js",
       "vendor/bower/angular/angular.js",
 	  	"vendor/bower/angular-resource/angular-resource.js",
