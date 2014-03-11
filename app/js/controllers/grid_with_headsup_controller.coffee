@@ -16,7 +16,7 @@ GridWithHeadsupCtrl = ($scope, $stateParams, $http, $location, BinderyModel, Bin
   )
 
   $scope.queryParams = () -> SearchService.queryParams()
-  $scope.searchResponse = SearchService.data
+  $scope.searchResponse = SearchService.searchResponse
   $scope.docs = SearchService.docs
   $scope.totalServerItems = SearchService.totalServerItems
   
@@ -136,7 +136,8 @@ GridWithHeadsupCtrl = ($scope, $stateParams, $http, $location, BinderyModel, Bin
     SearchService.pagingOptions.currentPage = $scope.pagingOptions.currentPage
     SearchService.queryString = $scope.filterOptions.filterText
     SearchService.runQuery().then( (data) -> 
-      $scope.docs = SearchService.docs 
+      $scope.docs = SearchService.docs
+      $scope.searchResponse = SearchService.searchResponse 
       $scope.totalServerItems = SearchService.totalServerItems
       if (!$scope.$$phase)
         $scope.$apply()

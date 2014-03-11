@@ -1,0 +1,204 @@
+
+<div class='header row'>
+  <div class='span3'>
+    <h1>Edit pool</h1>
+  </div>
+</div>
+<div class='row'>
+  <div class='span3'>
+    <ul class='nav nav-pills nav-stacked'>
+      <li ng-class='{active: navOption == currentNav}' ng-repeat='navOption in navigationOptions'>
+        <a ng-click='selectNavOption(navOption)'>{{navOption.name}}</a>
+      </li>
+    </ul>
+  </div>
+  <div class='span10'>
+    <form class='poolInfoForm' name='poolInfoForm' ng-show='currentNav.id == "pool_info" || currentNav.id == "contributors" '>
+      <div class='panel panel-default pool-info' ng-show='currentNav.id == "pool_info"'>
+        <div class='panel-heading'>
+          <h3 class='panel-title'>Pool Info</h3>
+        </div>
+        <div class='panel-body'>
+          <button class='btn btn-primary pull-right' ng-click='updatePool(pool); poolInfoForm.$setPristine()' type='submit'>Apply Changes</button>
+          <div class='form-group'>
+            <label>Name</label>
+            <input ng-model='pool.name'>
+          </div>
+          <div class='form-group'>
+            <label>Short Name</label>
+            <input ng-model='pool.short_name'>
+            <span class='help-block'>No spaces or special characters</span>
+          </div>
+          <div class='form-group'>
+            <label>Description</label>
+            <textarea class='form-control' ng-model='pool.description' size='30'></textarea>
+          </div>
+        </div>
+      </div>
+      <div class='panel panel-default contributors' ng-show='currentNav.id == "contributors"'>
+        <div class='panel-heading'>
+          <h3 class='panel-title'>Contributors</h3>
+        </div>
+        <div class='panel-body'>
+          <button class='btn btn-primary pull-right' ng-click='updatePool(pool); poolInfoForm.$setPristine()' type='submit'>Apply Changes</button>
+          <table class='permissions'>
+            <tr>
+              <th>User</th>
+              <th>Access</th>
+            </tr>
+            <tr ng-repeat='ac in pool.access_controls'>
+              <td class='contributor'>
+                <input bindery-token-input='contributorTokeninputOptions' data-url='"/identities"' ng-model='ac.identity'>
+              </td>
+              <td class='access'>
+                <select ng-model='ac.access'>
+                  <option value='EDIT'>Read and Write All Content</option>
+                  <option value='READ'>Read-only access to All Content</option>
+                </select>
+              </td>
+              <td>
+                <a class='remove' ng-click='removeContributor(ac)'>&times;</a>
+              </td>
+            </tr>
+          </table>
+          <div class='actions'>
+            <a class='add' ng-click='addContributor()'>add another contributor</a>
+          </div>
+        </div>
+        <div class='panel-body'>
+          <h3 class='panel-title'>Owner</h3>
+          <span ng-show='context.poolOwner.name'>{{context.poolOwner.name}}  ({{context.poolOwner.short_name}})</span>
+          <span ng-hide='context.poolOwner.name'>{{context.poolOwner.short_name}}</span>
+        </div>
+      </div>
+    </form>
+    <div class='audiences' ng-controller='PoolAudienceEditorCtrl' ng-show='currentNav.id == "audiences"'>
+      <ul class='nav nav-tabs nav-pills'>
+        <li ng-class='{active: selectedCategory == "everyone"}'>
+          <a ng-click='selectCategory("everyone")'>Everyone (all visitors)</a>
+        </li>
+        <li ng-class='{active: category == selectedCategory}' ng-repeat='category in audienceCategories'>
+          <a ng-click='selectCategory(category)'>{{category.name}}</a>
+        </li>
+      </ul>
+      <div class='panel-body'>
+        <div class='actions' style='height:1.5em;'>
+          <a class='pull-right' ng-click='newCategory()'>add a new audience category</a>
+        </div>
+      </div>
+      <div class='tab-content' ng-hide='selectedCategory == "everyone"'>
+        <div class='panel panel-default'>
+          <div class='panel-body'>
+            <ng-form class='audienceCategoryForm' name='audienceCategoryForm'>
+              <button class='btn btn-primary pull-right' ng-click='selectedCategory.$save()' ng-hide='selectedCategory.id' type='submit'>Create this Category</button>
+              <button class='btn btn-primary pull-right' ng-click='selectedCategory.$update()' ng-show='selectedCategory.id &amp;&amp; audienceCategoryForm.$dirty' type='submit'>Save Changes to this Category</button>
+              Category Name
+              <input ng-model='selectedCategory.name'>
+              <div class='actions' ng-show='selectedCategory.audiences.length == 0'>
+                <a ng-click='addAudienceToCategory(selectedCategory)'>add an audience to this category</a>
+              </div>
+            </ng-form>
+          </div>
+        </div>
+        <div class='actions' ng-show='selectedCategory.audiences.length &gt; 0'>
+          <a ng-click='addAudienceToCategory(selectedCategory)'>add another audience</a>
+        </div>
+        <div class='panel panel-default audience' ng-repeat='audience in selectedCategory.audiences'>
+          <div class='panel-heading'>
+            <h3 class='panel-title'>{{audience.name}}</h3>
+          </div>
+          <div class='panel-body'>
+            <form class='audienceForm' name='audienceForm' ng-show='selectedCategory.id'>
+              <button class='btn btn-primary pull-right' ng-click='audience.$save()' ng-hide='audience.id' type='submit'>Create this Audience</button>
+              <button class='btn btn-primary pull-right' ng-click='audience.$update()' ng-show='audience.id &amp;&amp; audienceForm.$dirty' type='submit'>Save Changes to this Audience</button>
+              <div class='form-group'>
+                <label>Audience Name:</label>
+                <input ng-model='audience.name'>
+              </div>
+              <div class='filters' ng-show='audience.id'>
+                <h4>Filters</h4>
+                <a ng-click='audience.addFilter()' ng-show='audience.filters.length == 0'>create a filter</a>
+                <a ng-click='audience.addFilter()' ng-show='audience.filters.length &gt; 0'>add another filter</a>
+                <div class='form-group filter' ng-repeat='filter in audience.filters'>
+                  <select class='filter_type' name='exhibit[filters_attributes][][filter_type]' ng-model='filter.filter_type'>
+                    <option value='GRANT'>Allow items where</option>
+                    <option value='RESTRICT'>Restrict to items where</option>
+                  </select>
+                  <select ng-model='filter.field_name' ng-options='field.code as field.name for field in pool.fields()'></select>
+                  <span class='operator' ng-hide='filter.filter_type=="RESTRICT"'>is</span>
+                  <select class='operator' name='exhibit[filters_attributes][][operator]' ng-model='filter.operator' ng-show='filter.filter_type=="RESTRICT"'>
+                    <option value='+'>is</option>
+                    <option value='-'>is not</option>
+                  </select>
+                  <input bindery-token-input='filterValuesTokeninputOptions' class='filterValues' data-url='context.poolUrl+"/fields/"+filter.field_name' id='filter_{{filter.id}}' name='filter[values]' ng-model='filter.values'>
+                  <a class='remove' ng-click='audience.removeFilter(filter)'>&times;</a>
+                </div>
+              </div>
+              <div class='members' ng-show='audience.id'>
+                <h4>Members:</h4>
+                <input bindery-token-input='audienceMemberTokeninputOptions' data-url='"/identities"' ng-model='audience.member_ids'>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class='actions' ng-show='selectedCategory.audiences.length &gt; 0'>
+          <a ng-click='addAudienceToCategory(selectedCategory)'>add another audience</a>
+        </div>
+      </div>
+      <div class='tab-content panel panel-default audience' ng-show='selectedCategory == "everyone"'>
+        <div class='panel-heading'>
+          <h3 class='panel-title'>Everyone (all visitors)</h3>
+        </div>
+        <div class='panel-body'>
+          <p>
+            <b>This pool is only visible to people who are members of its audiences.</b>
+            In order to visit this pool and see its content, you must be logged in as someone who is listed in at least one of the audiences.  If you are not logged in, or if you are logged in as someone who is not an audience member, you will be redirected to the DataBindery home page.
+          </p>
+          <p>
+            <b>If you are logged in as an audience member for this pool,</b>
+            then your search results will be filtered based on the filters specified by the audiences you are a member of.
+          </p>
+          <p>
+            <b>Note:</b>
+            If you are listed as a contributor for this pool, you will see everything in the pool.  Audiences are specifically for filtering what is visible to people who are not contributors.
+          </p>
+          <p>
+            <b>To create audiences:</b>
+            <ul>
+              <li>
+                Click
+                <a ng-click='newCategory()'>add a new audience category</a>
+              </li>
+              <li>Name the category and click "Create this category"</li>
+              <li>Add any number of audiences to the category</li>
+              <li>Specify the filters that each audience should apply</li>
+              <li>Add members to the audience</li>
+            </ul>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class='panel panel-default sources' ng-show='currentNav.id == "sources"'>
+      <div class='panel-heading'>
+        <h3 class='panel-title'>Sources</h3>
+      </div>
+      <div class='panel-body'>
+        <div class='source external'>
+          <h4>Bindery Storage</h4>
+        </div>
+      </div>
+      <div class='panel-footer'></div>
+    </div>
+    <div class='panel panel-default indexing' ng-show='currentNav.id == "indexing"'>
+      <div class='panel-heading'>
+        <h3 class='panel-title'>Indexing</h3>
+      </div>
+      <div class='panel-body'>
+        <div class='form-actions'>
+          <button class='btn btn-primary' name='update_index' type='submit'>Rebuild Solr Index</button>
+          Warning: Rebuilding the index can take a long time.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
