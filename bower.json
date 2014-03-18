@@ -25,6 +25,7 @@
     "angular-bootstrap": "~0.10",
     "angular-ui-router": "0.2.8-bowratic-tedium",
     "ng-grid": "~2.0.7",
+    "ui-sortable": "git@github.com:angular-ui/ui-sortable.git",
     "bootstrap": "",
     "jquery-file-upload": "~9.5.0",
     "blueimp-load-image": "~1.11.0"

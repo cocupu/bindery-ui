@@ -17,4 +17,5 @@ class ContextService extends AngularService
         @pool.identity_name = identityName
         @poolOwner = @BinderyIdentity.get({name:data.owner_id})
         @pool.fields()
+        @pool.models()
       )

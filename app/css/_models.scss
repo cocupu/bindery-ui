@@ -1,0 +1,9 @@
+.fieldConfig {
+  .show-on-hover { display: none; }
+}
+
+.fieldConfig:hover {
+  .show-on-hover { display:  block; }
+}
+
+th.rearrange { width: 20px; }

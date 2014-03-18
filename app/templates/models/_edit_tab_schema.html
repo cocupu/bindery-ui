@@ -1,0 +1,58 @@
+<div class='panel panel-default model'>
+  <div class='panelHeader panel-header'>
+    <a ng-click='model.addField()'>Add Field</a>
+    <a ng-click='model.addAssociation()'>Add Association</a>
+    <div class="actions pull-right">
+      <button class='btn btn-default pull-right' ng-click='model.update()' type='button'>Save Model</button>
+      <span class='savedIndicator clearfix' ng-switch on='model.dirty'>
+        <span class='message' ng-switch-when='true'>You have unsaved changes</span>
+        <span class='message' ng-switch-when='false'>Saved at: {{model.lastUpdated}}</span>
+      </span>
+    </div>
+  </div>
+  Title Field: 
+  <select ng-model='model.label' ng-options='fieldConfig.code as fieldConfig.name for fieldConfig in model.fields'></select>
+  <form class='model-editor panel-body'>
+    <table>
+      <thead>
+        <tr>
+          <th class="rearrange"></th><th>Label</th><th>Type</th><th>URI</th><th>Multivalue?</th>
+        </tr>
+      </thead>
+      <tbody ui-sortable ng-model="model.fields">
+        <tr class="fieldConfig" ng-repeat='fieldConfig in model.fields'>
+          <td><span class="show-on-hover glyphicon glyphicon-move"></span>
+          <td><input id="{{'modelField_'+fieldConfig.code+'_name'}}" ng-model='fieldConfig.name'></td>
+          <td><select ng-model='fieldConfig.type' ng-options='item.id as item.label for item in typeOptionsFor(fieldConfig.type)'></select></td>
+          <td>{{fieldConfig.uri}}</td>
+          <td><input ng-model='fieldConfig.multivalue' type='checkbox'></td>
+          <td><a class="show-on-hover" ng-click="model.fields.splice(model.fields.indexOf(fieldConfig),1)">remove</a></td>          
+        </tr>
+      </tbody>
+    </table>
+  
+    <table>
+      <thead>
+        <tr>
+          <th class="rearrange"></th><th>Label</th><th>Type</th><th>References</th><th>URI</th><th>Multivalue?</th>
+        </tr>
+      </thead>
+      <tbody ui-sortable ng-model="model.associations">
+        <tr  class="fieldConfig" id="{{'modelField_'+fieldConfig.code}}" ng-repeat='fieldConfig in model.associations'>
+          <td><span class="show-on-hover glyphicon glyphicon-move"></span>
+          <td><input ng-model='fieldConfig.name'></td>
+          <td><select ng-model='fieldConfig.type' ng-options='item.id as item.label for item in typeOptionsFor(fieldConfig.type)'></select></td>
+          <td ng-show="fieldConfig.code == 'files'">
+            File Entities
+          </td>
+          <td ng-hide="fieldConfig.code == 'files'">
+            <select ng-model='fieldConfig.references' ng-options='model.id.toString() as model.name for model in pool.models()'></select>
+          </td>
+          <td>{{fieldConfig.uri}}</td>
+          <td><input ng-model='fieldConfig.multivalue' type='checkbox'></td>
+          <td><a class="show-on-hover" ng-click="model.fields.splice(model.fields.indexOf(fieldConfig),1)">remove</a></td>          
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>

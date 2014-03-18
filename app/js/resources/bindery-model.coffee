@@ -1,19 +1,29 @@
-angular.module('curateDeps').factory('BinderyModel', ['$resource', '$sanitize', ($resource, $sanitize) ->
+angular.module('curateDeps').factory('BinderyModel', ['$resource', '$sanitize', 'MemoService', ($resource, $sanitize, memoService) ->
         BinderyModel = $resource('/models/:modelId.json', { modelId:'@id' }, {
             update: { method: 'PUT' },
             query: {
-                method: 'GET',
-                isArray: false, # <- not returning an array
+                method: 'GET'
+                url: '/:identityName/:poolName/models.json'
+                params: {poolName:'@poolName', identityName:'@identityName'}
+                isArray: true
                 transformResponse: (data, header) ->
-                    wrapped = angular.fromJson(data);
-                    angular.forEach(wrapped.items, (item, idx) ->
-                        wrapped.items[idx] = new BinderyModel(item)  #<-- replace each item with an instance of the resource object
-                    )
-                    return wrapped;
-
+                  wrapped = angular.fromJson(data);
+                  angular.forEach(wrapped, (item, idx) ->
+                      m = new BinderyModel(item)  #<-- replace each item with an instance of the resource object
+                      wrapped[idx] = m
+                      memoService.createOrUpdate("BinderyModel", m)
+                  )
+                  return wrapped;
             }
         })
-
+        
+        BinderyModel.prototype.update = () ->
+          this.$update( (savedModel, putResponseHeaders) =>
+            now = new Date()
+            this.lastUpdated = now.getHours()+':'+now.getMinutes().leftZeroPad(2)+':'+now.getSeconds().leftZeroPad(2)
+            this.dirty = false
+          )
+        
         BinderyModel.typeOptionsFor = (fieldType) ->
           associationTypes = [{label:"Associaton (Has Many)", id:"Has Many"}, {label:"Associaton (Has One)", id:"Has One"}]
           fieldTypes = [{label:"Text Field", id:"text"},{label:"Text Area", id:"textarea"}, {label:"Date", id:"date"}]

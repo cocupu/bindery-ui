@@ -39,8 +39,13 @@ angular.module("app").config( ($stateProvider, $urlRouterProvider) ->
     })
     .state('curate.pool.models', {
       url: "/models",
-      templateUrl: "pools/edit.html",
-      controller: 'PoolEditorCtrl'
+      templateUrl: "models/list.html",
+      controller: 'ModelsListCtrl'
+    })
+    .state('curate.pool.models.edit', {
+      url: "/{modelId}",
+      templateUrl: "models/edit.html",
+      controller: 'ModelEditorCtrl'
     })
     .state('curate.pool.perspectives', {
       url: "/perspectives",
