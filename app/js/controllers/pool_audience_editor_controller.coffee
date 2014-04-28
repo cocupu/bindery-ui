@@ -79,5 +79,5 @@ PoolAudienceEditorCtrl = ($scope, context, BinderyAudienceCategory, BinderyAudie
 
   }
 
-PoolAudienceEditorCtrl.$inject = ['$scope', 'contextService', 'BinderyAudienceCategory', 'BinderyAudience', 'BinderyIdentity']
+PoolAudienceEditorCtrl.$inject = ['$scope', 'ContextService', 'BinderyAudienceCategory', 'BinderyAudience', 'BinderyIdentity']
 angular.module("curateDeps").controller('PoolAudienceEditorCtrl', PoolAudienceEditorCtrl)

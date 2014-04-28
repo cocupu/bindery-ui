@@ -1,8 +1,8 @@
 # Editable Grid
-PoolEditorCtrl = ($scope, $routeParams, BinderyPool, BinderyIdentity, context) ->
+PoolEditorCtrl = ($scope, $stateParams, BinderyPool, BinderyIdentity, context) ->
 
   # General Scope properties
-  context.initialize($routeParams.identityName, $routeParams.poolName)
+  context.initialize($stateParams.identityName, $stateParams.poolName)
   $scope.context = context
   $scope.pool = context.pool
 
@@ -62,5 +62,5 @@ PoolEditorCtrl = ($scope, $routeParams, BinderyPool, BinderyIdentity, context) -
 
   }
 
-PoolEditorCtrl.$inject = ['$scope', '$routeParams', 'BinderyPool', 'BinderyIdentity', 'contextService']
+PoolEditorCtrl.$inject = ['$scope', '$stateParams', 'BinderyPool', 'BinderyIdentity', 'ContextService']
 angular.module("curateDeps").controller('PoolEditorCtrl', PoolEditorCtrl)

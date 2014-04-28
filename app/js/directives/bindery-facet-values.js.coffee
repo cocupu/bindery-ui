@@ -7,17 +7,17 @@ angular.module("app").directive('binderyFacetValues', ['$compile','$location',($
       values: '='
       field: '='
     }
-    controller: ['$scope', '$element', ($scope, $element) ->
-      $scope.applyFacetLimit = (value) ->
-        searchParams = $location.search()
-        searchParams["f["+$scope.field.code+"_facet][]"] = encode(value)
-#        $location.path( $location.path() ).search(searchParams)
-#        $location.replace()
-        console.log(searchParams)
-        newPath = $location.path() + "?" + $.param(searchParams, true)
-        console.log(decodeURIComponent(newPath))
-        window.location.href = decodeURIComponent(newPath)
-    ]
+#     controller: ['$scope', '$element', ($scope, $element) ->
+#       $scope.applyFacetLimit = (value) ->
+#         searchParams = $location.search()
+#         searchParams["f["+$scope.field.code+"_facet][]"] = encode(value)
+# #        $location.path( $location.path() ).search(searchParams)
+# #        $location.replace()
+#         console.log(searchParams)
+#         newPath = $location.path() + "?" + $.param(searchParams, true)
+#         console.log(decodeURIComponent(newPath))
+#         window.location.href = decodeURIComponent(newPath)
+#     ]
     link: (scope, element, attrs) ->
       scope.$watch('values', (newValue, oldValue) ->
         if (newValue)

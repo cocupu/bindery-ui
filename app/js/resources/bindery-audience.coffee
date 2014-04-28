@@ -5,7 +5,6 @@ angular.module('curateDeps').factory('BinderyAudience', ['$resource', ($resource
       method: 'POST',
       isArray: false, # <- not returning an array
       transformResponse: (data, header) ->
-        console.log(header)
         return data
     }
     update: { method: 'PUT' }

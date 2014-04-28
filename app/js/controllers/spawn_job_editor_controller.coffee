@@ -20,13 +20,11 @@ SpawnJobEditorCtrl = ($scope, $routeParams, $http, context, BinderySpreadsheet, 
   $scope.createMappingTemplate = (mappingTemplate) ->
     mappingTemplate.$save({identityId:$routeParams.identityName, poolId:$routeParams.poolName}, (returnedTemplate) ->
       $scope.mappingTemplate = returnedTemplate
-      console.log($scope.mappingTemplate)
     )
 
   $scope.updateMappingTemplate = (mappingTemplate) ->
     $scope.mappingTemplate = mappingTemplate.$update({identityId:$routeParams.identityName, poolId:$routeParams.poolName}, (returnedTemplate) ->
       $scope.mappingTemplate = returnedTemplate
-      console.log($scope.mappingTemplate)
     )
   $scope.spawn = (mappingTemplate, spreadsheet) ->
     data = {

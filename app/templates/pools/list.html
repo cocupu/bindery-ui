@@ -1,0 +1,53 @@
+<h1>Your Pools</h1>
+
+<div class="container">
+  <div class="col-md-10 pool panel panel-default " ng-repeat="pool in pools"> 
+    <div class="panel-header"> 
+      <div class="col-md-5">
+        <h2>{{pool.name}}</h2>
+      </div>
+      
+        <div class="actions pull-right">
+          <ul class="nav navbar-nav">
+            <li><a href="/#/pool{{pool.url}}">Curate</a></li>
+            <li><a href="/#/pool{{pool.url}}/perspectives">Perspecitves</a></li>
+            <li><a href="/#/pool{{pool.url}}/models">Models</a></li>
+            <li><a href="/#/pool{{pool.url}}/admin">Admin</a></li>
+          </ul>
+        </div>
+
+    </div>
+   
+    <div class="panel-body">
+      <div class="description">{{pool.description}}</div>
+      <div class="row">
+        <div class="col-md-4 panel panel-default entities">
+          <div class="panel-header"><h4>Entities</h4></div>
+          <div class="panel-body">
+            <ul class="models">
+              <li ng-repeat="model in pool.cache.models">{{model.name}}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-4 panel panel-default files">
+          <div class="panel-header"><h4>Files</h4></div>
+          <div class="panel-body">
+            <ul class="models">
+              <li>File Entity</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="panel panel-default perspectives">
+          <div class="panel-header"><h4>Perspectives</h4></div>
+          <div class="panel-body">
+            <ul class="perspectives">
+              <li ng-repeat="perspective in pool.cache.perspectives">{{perspective.title}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

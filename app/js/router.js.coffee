@@ -16,7 +16,8 @@ angular.module("app").config( ($stateProvider, $urlRouterProvider) ->
     })
     .state('identity.pools', {
       url: "/pools",
-      template: '<h3>Pools List</h3><ui-view/>'
+      controller: 'PoolsListCtrl',
+      templateUrl: 'pools/list.html'
     })
     .state('curate', {
       url: "/pool/{identityName}",
@@ -33,7 +34,7 @@ angular.module("app").config( ($stateProvider, $urlRouterProvider) ->
       controller: 'GridWithHeadsupCtrl'
     })
     .state('curate.pool.grid', {
-      url: "grid",
+      url: "/grid",
       templateUrl: "grid_with_headsup.html",
       controller: 'GridWithHeadsupCtrl'
     })

@@ -10,6 +10,12 @@ This code base inherits the following features from the lineman-angular-template
 
 # Instructions
 
+## Requirements
+
+* node JS
+
+## Clone & Run
+
 1. `git clone https://github.com/cocupu/bindery-ui`
 1. `cd bindery-ui`
 1. `sudo npm install -g lineman`
