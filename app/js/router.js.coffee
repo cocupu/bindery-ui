@@ -1,7 +1,7 @@
 angular.module("app").config( ($stateProvider, $urlRouterProvider) ->
 
   # For any unmatched url, redirect to /state1
-  $urlRouterProvider.otherwise("/state1")
+  $urlRouterProvider.otherwise("/pool")
 
   # Now set up the states
   $stateProvider

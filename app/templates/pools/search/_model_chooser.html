@@ -1,0 +1,10 @@
+<div class="dropdown">
+  <span class="dropdown-toggle" data-toggle="dropdown">
+    {{modelChooserLabel()}}<b class="caret"></b>
+  </span>
+  <ul class='dropdown-menu'>
+    <li ng-class='{active: model == currentModel}' ng-repeat='model in models'>
+      <a ng-click="selectModel(model)">{{model.name}}</a>
+    </li>
+  </ul>
+</div>

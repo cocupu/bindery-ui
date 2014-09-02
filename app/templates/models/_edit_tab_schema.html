@@ -16,7 +16,7 @@
     <table>
       <thead>
         <tr>
-          <th class="rearrange"></th><th>Label</th><th>Type</th><th>URI</th><th>Multivalue?</th>
+          <th class="rearrange"></th><th>Label</th><th>Type</th><th>Code</th><th>Multivalue?</th>
         </tr>
       </thead>
       <tbody ui-sortable ng-model="model.fields">
@@ -24,7 +24,7 @@
           <td><span class="show-on-hover glyphicon glyphicon-move"></span>
           <td><input id="{{'modelField_'+fieldConfig.code+'_name'}}" ng-model='fieldConfig.name'></td>
           <td><select ng-model='fieldConfig.type' ng-options='item.id as item.label for item in typeOptionsFor(fieldConfig.type)'></select></td>
-          <td>{{fieldConfig.uri}}</td>
+          <td><input id="{{'modelField_'+fieldConfig.code+'_code'}}" ng-model='fieldConfig.code'></td>
           <td><input ng-model='fieldConfig.multivalue' type='checkbox'></td>
           <td><a class="show-on-hover" ng-click="model.fields.splice(model.fields.indexOf(fieldConfig),1)">remove</a></td>          
         </tr>

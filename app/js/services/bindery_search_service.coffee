@@ -13,14 +13,20 @@ class BinderySearchService extends AngularService
     @docs = []
     @selectedNode = {}
     @queryString = ""
-    @model_id = 4
-    
-  queryParams: () -> {
-    model_id: @model_id,
-    rows: @pagingOptions.pageSize,
-    page: @pagingOptions.currentPage,
-    q: @queryString
-  } 
+    # @model_id = false
+  
+  setModel: (model_id) -> 
+    @model_id = model_id
+          
+  queryParams: () -> 
+    params = {
+      rows: @pagingOptions.pageSize,
+      page: @pagingOptions.currentPage,
+      q: @queryString
+    } 
+    unless (typeof @model_id == "undefined")
+      params.model_id = @model_id
+    return params
 
     
   runQuery: () -> 

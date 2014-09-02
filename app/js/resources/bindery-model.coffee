@@ -26,7 +26,7 @@ angular.module('curateDeps').factory('BinderyModel', ['$resource', '$sanitize', 
         
         BinderyModel.typeOptionsFor = (fieldType) ->
           associationTypes = [{label:"Associaton (Has Many)", id:"Has Many"}, {label:"Associaton (Has One)", id:"Has One"}]
-          fieldTypes = [{label:"Text Field", id:"text"},{label:"Text Area", id:"textarea"}, {label:"Date", id:"date"}]
+          fieldTypes = [{label:"Text Field", id:"string"},{label:"Text Area", id:"textarea"}, {label:"Integer", id:"integer"}, {label:"Date", id:"date"}]
           if (["Has One", "Has Many"].indexOf(fieldType) > -1)
             return associationTypes
           else

@@ -1,20 +1,13 @@
 # Editable Grid with Headsup
 GridWithHeadsupCtrl = ($scope, $stateParams, $http, $location, BinderyModel, BinderyNode, memoService, context, SearchService) ->
-
+    
   # General Scope properties
+  $scope.controller = "search"
   context.initialize($stateParams.identityName, $stateParams.poolName)
   $scope.stateParams = $stateParams
 
-  # $scope.poolUrl = $location.path().replace("/search", "")
   $scope.poolUrl = context
-  $scope.selectedNodes = []
-  $scope.currentNode = {}
-  $scope.currentModel = {}
-  $scope.currentModel = BinderyModel.get({modelId:SearchService.model_id}, (m, getResponseHeaders) ->
-    memoService.createOrUpdate("BinderyModel", m)
-    $scope.columnDefs = m.columnDefsFromModel()
-  )
-
+  $scope.searchService = SearchService
   $scope.queryParams = () -> SearchService.queryParams()
   $scope.searchResponse = SearchService.searchResponse
   $scope.docs = SearchService.docs
@@ -26,10 +19,43 @@ GridWithHeadsupCtrl = ($scope, $stateParams, $http, $location, BinderyModel, Bin
   $scope.supplementalPanelState = "none"
   $scope.supplementalNode = {}
   $scope.focusedField = {}
+  
+  #
+  # Sidebar & Headsup
+  #
+  $scope.sidebarVisible = true
+  $scope.toggleSidebar = (variable) -> $scope.sidebarVisible = !$scope.sidebarVisible
+  $scope.headsupVisible = true
+  $scope.toggleHeadsup = (variable) -> $scope.headsupVisible = !$scope.headsupVisible
+  $scope.resultsLayout = 'grid'
+  $scope.setResultsLayout = (layout) -> $scope.resultsLayout = layout
+    
+  
 
   #
   # Logic for Manipulating Models and Nodes
   #
+  $scope.selectedNodes = []
+  $scope.currentNode = {}
+  $scope.currentModel = {}
+  if SearchService.model_id
+    $scope.currentModel = BinderyModel.get({modelId:SearchService.model_id}, (m, getResponseHeaders) ->
+      memoService.createOrUpdate("BinderyModel", m)
+      $scope.columnDefs = m.columnDefsFromModel()
+    )
+  $scope.modelChooserLabel = () ->
+    if $scope.currentModel.name
+      return $scope.currentModel.name
+    else
+      return "Choose Model"
+      
+  $scope.models = BinderyModel.query({identityName:$stateParams.identityName, poolName:$stateParams.poolName})
+  $scope.selectModel = (model) ->
+    SearchService.model_id = model.id
+    $scope.runQuery()
+    $scope.currentModel = model
+    
+  $scope.selectNode = (node) -> $scope.selectedNodes[0] = node
   $scope.typeOptionsFor = (fieldType) ->  return BinderyModel.typeOptionsFor(fieldType)
 
   $scope.modelFor = (node) ->

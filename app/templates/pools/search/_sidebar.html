@@ -1,0 +1,13 @@
+<div class="sidebar">
+  <h1>Sidebar</h1>
+  <div class="facet-limit">
+    <h5>Model</h5>
+    <span ng-include="'pools/search/_model_chooser.html'"></span>
+  </div> 
+  <div class="facet-limit">
+    <h5>Paging Options</h5>{{searchService.pagingOptions}}
+  </div>
+  <div class="facet-limit">
+    <h5>Query String</h5> {{searchService.queryString}}
+  </div>
+</div>
