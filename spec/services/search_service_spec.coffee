@@ -13,13 +13,11 @@ describe "service: BinderySearchService", ->
   describe "#queryParams()", ->
     Then  -> expect(@BinderySearchService.queryParams().page).toBe(1)
     Then  -> expect(@BinderySearchService.queryParams().rows).toBe(25)
-    When  -> @BinderySearchService.setModel(88)
-    Then  -> expect(@BinderySearchService.model_id).toBe(88)
 		Then  -> expect(@BinderySearchService.queryParams().model_id).toBe(@BinderySearchService.model_id)
 		
   describe "#runQuery", ->
     When  -> spyOn(@BinderySearchService, 'processResults')
-    When  -> @BinderySearchService.setModel(4)
+    When  -> @BinderySearchService.model_id = 4
     When  -> @BinderySearchService.runQuery()
     Then  -> expect(@$httpGet).toHaveBeenCalledWith('http://localhost:5555/fooId/barPool/search.json', {"params": {"rows":25, page:1, model_id: 4, q:""}, method : 'get', url : 'http://localhost:5555/fooId/barPool/search.json'})
     When  -> @$httpBackend.flush()

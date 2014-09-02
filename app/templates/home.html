@@ -1,0 +1,10 @@
+<h2>Welcome to DataBindery</h2>
+
+<div ng-hide="isAuthenticated()">
+    Want to log in?
+    <div ng-controller="LoginController" ng-include="'login.html'"></div>
+</div>
+<div ng-show="isAuthenticated()">
+    <a ng-href="#/identity/{{context.identityName}}/pools">View Your Pools</a>
+</div>
+

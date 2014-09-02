@@ -1,10 +1,20 @@
 angular.module("app").config( ($stateProvider, $urlRouterProvider) ->
 
-  # For any unmatched url, redirect to /state1
-  $urlRouterProvider.otherwise("/pool")
+  # For any unmatched url, redirect to /
+  $urlRouterProvider.otherwise("/home")
 
   # Now set up the states
   $stateProvider
+    .state('home', {
+        url: "/home",
+        controller: 'HomeController',
+        templateUrl: 'home.html'
+      })
+    .state('login', {
+        url: "/login",
+        controller: 'LoginController',
+        templateUrl: 'login.html'
+      })
     .state('identity', {
       abstract: true,
       url: "/identity/{identityName}",

@@ -26,12 +26,12 @@
       </form>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage<b class="caret"></b></a>
+          <a class="dropdown-toggle" data-toggle="dropdown">Manage<b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a ng-href="#/identity/{{context.identityName}}">My Account</a></li>
             <li><a ng-href="#/identity/{{context.identityName}}/pools">My Pools</a></li>
             <li class="divider"></li>
-            <li><a href="#">Log Out</a></li>
+            <li><a href="#" ng-click='logout()' >Log Out</a></li>
           </ul>
         </li>
       </ul>

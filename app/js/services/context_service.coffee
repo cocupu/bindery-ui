@@ -11,11 +11,13 @@ class ContextService extends AngularService
 
     if identityName
       @identityName = identityName
-      @poolName = poolName
-      @poolUrl = "/"+@identityName+"/"+@poolName
-      @pool = @BinderyPool.get({identityName: identityName, poolName: poolName}, (data) =>
-        @pool.identity = identityName
-        @poolOwner = @BinderyIdentity.get({name:data.owner_id})
-        @pool.fields()
-        @pool.models()
-      )
+
+      if poolName
+        @poolName = poolName
+        @poolUrl = "/"+@identityName+"/"+@poolName
+        @pool = @BinderyPool.get({identityName: identityName, poolName: poolName}, (data) =>
+          @pool.identity = identityName
+          @poolOwner = @BinderyIdentity.get({name:data.owner_id})
+          @pool.fields()
+          @pool.models()
+        )

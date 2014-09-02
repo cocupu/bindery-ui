@@ -1,6 +1,7 @@
 # dependency - Function.prototype.bind or underscore/lodash
 # Based on code by Elad Ossadon from http://www.devign.me/angular-dot-js-coffeescript-controller-base-class
  
+# This is a convenience class that simplifies interactions with Angular's dependency injection and allows you to write Class Methods that will automatically be bound to the Controller's scope.
 # The constructor will  
 # * handle dependency injection for you based on dependencies passed to @inject in your Class definition
 # * Bind Class Methods to the Controller $scope

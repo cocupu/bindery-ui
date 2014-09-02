@@ -1,4 +1,4 @@
-angular.module('curateDeps', ['ng', "ngResource", "ngSanitize", 'ngGrid', 'ngRoute', 'ui.router', 'ui.sortable'])  #, "ngRoute"
+angular.module('curateDeps', ['ng', "ngResource", "ngSanitize", 'ngGrid', 'ngRoute', 'ui.router', 'ui.sortable', 'Devise'])  #, "ngRoute"
 app = angular.module("app", ["ngResource", "ngRoute", 'curateDeps'])
 
 app.config(['$httpProvider', ($httpProvider) ->
