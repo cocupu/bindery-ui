@@ -28,7 +28,8 @@
     "ui-sortable": "git@github.com:angular-ui/ui-sortable.git",
     "bootstrap": "",
     "jquery-file-upload": "~9.5.0",
-    "blueimp-load-image": "~1.11.0"
+    "blueimp-load-image": "~1.11.0",
+    "angular-devise": "~0.6.1"
   },
   "resolutions": {
     "angular": "1.2.9"

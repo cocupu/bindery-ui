@@ -15,15 +15,16 @@ module.exports = require(process.env['LINEMAN_MAIN']).config.extend('files', {
   js: {
     vendor: [
       "vendor/bower/jquery/dist/jquery.js",
-			"vendor/bower/jquery-ui/ui/jquery-ui.js",
+	  "vendor/bower/jquery-ui/ui/jquery-ui.js",
       "vendor/bower/bootstrap/dist/js/bootstrap.js",
       "vendor/bower/angular/angular.js",
-	  	"vendor/bower/angular-resource/angular-resource.js",
-			"vendor/bower/angular-sanitize/angular-sanitize.js",
+	  "vendor/bower/angular-resource/angular-resource.js",
+	  "vendor/bower/angular-sanitize/angular-sanitize.js",
       "vendor/bower/angular-bootstrap/angular-bootstrap.js",
       "vendor/bower/angular-ui-router/release/angular-ui-router.js",
       "vendor/bower/ng-grid/ng-grid-2.0.7.min.js ",
       "vendor/bower/ui-sortable/sortable.js",
+      "vendor/bower/angular-devise/lib/devise.js",
       "vendor/js/**/*.js"
     ],
     app: [
