@@ -39,10 +39,16 @@ GridWithHeadsupCtrl = ($scope, $stateParams, $http, $location, BinderyModel, Bin
   $scope.currentNode = {}
   $scope.currentModel = {}
   if SearchService.model_id
-    $scope.currentModel = BinderyModel.get({modelId:SearchService.model_id}, (m, getResponseHeaders) ->
+    BinderyModel.get({modelId:SearchService.model_id}, (m, getResponseHeaders) ->
       memoService.createOrUpdate("BinderyModel", m)
-      $scope.columnDefs = m.columnDefsFromModel()
+      $scope.setCurrentModel(m)
     )
+  $scope.setCurrentModel = (model) ->
+    $scope.currentModel = model
+    SearchService.model_id = model.id
+    $scope.runQuery()
+    $scope.columnDefs = model.columnDefsFromModel()
+
   $scope.modelChooserLabel = () ->
     if $scope.currentModel.name
       return $scope.currentModel.name
@@ -50,10 +56,6 @@ GridWithHeadsupCtrl = ($scope, $stateParams, $http, $location, BinderyModel, Bin
       return "Choose Model"
       
   $scope.models = BinderyModel.query({identityName:$stateParams.identityName, poolName:$stateParams.poolName})
-  $scope.selectModel = (model) ->
-    SearchService.model_id = model.id
-    $scope.runQuery()
-    $scope.currentModel = model
     
   $scope.selectNode = (node) -> $scope.selectedNodes[0] = node
   $scope.typeOptionsFor = (fieldType) ->  return BinderyModel.typeOptionsFor(fieldType)

@@ -4,7 +4,7 @@
   </span>
   <ul class='dropdown-menu'>
     <li ng-class='{active: model == currentModel}' ng-repeat='model in models'>
-      <a ng-click="selectModel(model)">{{model.name}}</a>
+      <a ng-click="setCurrentModel(model)">{{model.name}}</a>
     </li>
   </ul>
 </div>
