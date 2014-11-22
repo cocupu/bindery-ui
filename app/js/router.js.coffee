@@ -40,13 +40,13 @@ angular.module("app").config( ($stateProvider, $urlRouterProvider) ->
     })
     .state('curate.pool.default', {
       url: "",
-      templateUrl: "grid_with_headsup.html",
-      controller: 'GridWithHeadsupCtrl'
+      templateUrl: "pools/search.html",
+      controller: 'PoolSearchCtrl'
     })
     .state('curate.pool.grid', {
       url: "/grid",
-      templateUrl: "grid_with_headsup.html",
-      controller: 'GridWithHeadsupCtrl'
+      templateUrl: "pools/search.html",
+      controller: 'PoolSearchCtrl'
     })
     .state('curate.pool.models', {
       url: "/models",

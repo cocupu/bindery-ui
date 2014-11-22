@@ -8,6 +8,14 @@
     <h5>Paging Options</h5>{{searchService.pagingOptions}}
   </div>
   <div class="facet-limit">
-    <h5>Query String</h5> {{searchService.queryString}}
+    <h5>Query String</h5>
+    <input ng-model="searchService.queryString"></input>
+  </div>
+  <div class="facet-limit">
+      <h5>Sort</h5>
+      {{sortInfo}}
+      <div ng-repeat="sort in searchService.sorting">
+          {{sort.field}} {{sort.direction}}
+      </div>
   </div>
 </div>

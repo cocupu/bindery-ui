@@ -1,0 +1,20 @@
+<div ng-include="'pools/search/_layout_chooser.html'"></div>
+<div id="content" class="searchContext">
+    <div class="row">
+        <div class="col-md-3" ng-include="'pools/search/_sidebar.html'" ng-show="sidebarVisible"></div>
+        <div class="col-md-9">
+            <div class="row" ng-show="headsupVisible">
+                <div ng-include="'pools/search/_node_carousel.html'"></div>
+            </div>
+            <div id="documents" class="grid responsive display" ng-show="resultsLayout=='grid'" ng-controller="ResultsGridCtrl">
+                <div ng-hide="searchService.model_id">To use the grid view you must which type of content to show in the grid.
+                    <div ng-include="'pools/search/_model_chooser.html'"></div>
+                </div>
+                <div ng-show="searchService.model_id" class="gridStyle" ng-grid="gridOptions"></div>
+            </div>
+            <div id="documents" class="grid responsive display" ng-show="resultsLayout=='list'">
+                <div ng-include="'pools/search/_list_results.html'"></div>
+            </div>
+        </div>
+    </div>
+</div>

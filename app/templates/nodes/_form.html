@@ -1,0 +1,30 @@
+<form class='node-editor form-horizontal' role="form">
+    <div class='field form-group' ng-repeat='fieldConfig in node.model().fields.concat(node.model().associations)'>
+        <label class="col-sm-2 control-label" for="{{node.persistent_id+'_'+fieldConfig.id}}">
+            {{fieldConfig.name}}
+            <span class='field-helper' ng-show="fieldConfig.type == 'date'">{{node.data[fieldConfig.id]}}</span>
+        </label>
+      <span class="col-sm-8" ng-switch on='fieldConfig.type'>
+        <textarea class='form-control' id="{{node.persistent_id+'_'+fieldConfig.id}}" ng-focus='focusOnField(fieldConfig)' ng-model='node.data[fieldConfig.id]' ng-switch-when='textarea'></textarea>
+        <input class='form-control' id="{{node.persistent_id+'_'+fieldConfig.id}}" ng-focus='focusOnField(fieldConfig)' ng-model='node.data[fieldConfig.id]' ng-switch-when='date' type='date'>
+        <input bindery-token-input='nodeTokeninputOptions' class='form-control' data-field-config='{{fieldConfig}}' data-url="searchUrl+'?rows=100&amp;model_id='+fieldConfig.references" id="{{node.persistent_id+'_'+fieldConfig.id}}" multiple ng-focus='focusOnField(fieldConfig)' ng-model='node.associations[fieldConfig.id]' ng-switch-when='Has Many'>
+        <input class='form-control' id="{{node.persistent_id+'_'+fieldConfig.id}}" ng-focus='focusOnField(fieldConfig)' ng-model='node.data[fieldConfig.id]' ng-switch-default='true'>
+      </span>
+    </div>
+    <div class='file-entity clearfix' ng-show='node.file_entity'>
+        <div class='media-display' ng-switch on='node.file_type'>
+            <audio controls ng-switch-when='audio'>
+                <source ng-src='{{node.download_url()}}' type='audio/mpeg'></source>
+            </audio>
+            <video controls ng-switch-when='video'>
+                <source ng-src='{{node.download_url()}}' type='video/mp4'></source>
+            </video>
+        </div>
+        <div class='spawn-action' ng-show='node.spawnable'>
+            <a ng-href='/matt/footest/spawn_jobs/new?source_node_id={{node.persistent_id}}' target='_self'>Spawn entities from each row of this file</a>
+        </div>
+        <div class='download-link'>
+            <a ng-href='{{node.download_url()}}' target='_self'>Download ({{(node.data.file_size*.00000095367).toFixed(2)}}MB)</a>
+        </div>
+    </div>
+</form>

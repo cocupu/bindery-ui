@@ -1,0 +1,7 @@
+<div class="node-carousel" ng-controller="NodeCarouselCtrl">
+    <carousel interval="-1">
+        <slide ng-repeat="node in selectedNodes" active="indexOfActiveSlide == selectedNodes.indexOf(node)">
+            <div ng-include="'nodes/_edit.html'"></div>
+        </slide>
+    </carousel>
+</div>

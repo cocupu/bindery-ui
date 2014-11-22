@@ -15,6 +15,7 @@ class BinderySearchService extends AngularService
   docs: []
   selectedNode: {}
   queryString: ""
+  sorting: []
   
   #
   # Methods
@@ -50,7 +51,11 @@ class BinderySearchService extends AngularService
       rows: @pagingOptions.pageSize,
       page: @pagingOptions.currentPage,
       q: @queryString
-    } 
+    }
+    if(@sorting.length > 0)
+      params.sort = $.map(@sorting, (sort, i) -> return sort.field.code + " " +sort.direction ).join()
     unless (typeof @model_id == "undefined")
       params.model_id = @model_id
     return params
+
+  sortingOptions: () ->

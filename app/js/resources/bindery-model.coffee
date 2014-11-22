@@ -1,4 +1,4 @@
-angular.module('curateDeps').factory('BinderyModel', ['$resource', '$sanitize', 'MemoService', ($resource, $sanitize, memoService) ->
+angular.module('curateDeps').factory('BinderyModel', ['$resource', 'MemoService', ($resource, memoService) ->
         BinderyModel = $resource('/models/:modelId.json', { modelId:'@id' }, {
             update: { method: 'PUT' },
             query: {
@@ -43,18 +43,17 @@ angular.module('curateDeps').factory('BinderyModel', ['$resource', '$sanitize', 
             fixedColumnWidth = true
           fieldsDefs = $.map(this.fields, (f, i) ->
             columnDef = {
-              field:"data['"+$sanitize(f.code)+"']"
+              field:"data['"+f.id+"']"
               displayName:f.name
-      #        editableCellTemplate: '/assets/editField-textarea.html'
               editableCellTemplate: '/assets/editField-textfield.html'
-      #        editableCellTemplate: '<input type="text" ng-model="row.entity.data[\''+$sanitize(f.code)+'\']"></input>'
+              enableSorting: true
             }
             if fixedColumnWidth
               columnDef["width"] = "120"
             return columnDef
           )
           associationsDefs = $.map(this.associations, (f, i) ->
-            columnDef = {field:"associations['"+$sanitize(f.code)+"']", displayName:f.name, width:"120"}
+            columnDef = {field:"associations['"+f.id+"']", displayName:f.name, width:"120"}
             if fixedColumnWidth
               columnDef["width"] = "120"
             return columnDef

@@ -1,0 +1,20 @@
+<div class="node" ng-controller="NodeEditorCtrl">
+    <div class='header'>
+        <h3>{{node.title}}</h3>
+        <div class='persistent-id'>
+            pid:
+            <a ng-href='{{poolUrl}}/results/{{node.persistent_id}}' target='_self'>{{node.persistent_id}}</a>
+        </div>
+        <div>{{model.name}} (
+            <a>Edit {{model.name}} Model</a> |
+            <a>Search {{model.name}} nodes</a> |
+            <a>New {{model.name}} node</a> )
+        </div>
+    <span class='savedIndicator' ng-switch on='node.dirty'>
+      <span class='message' ng-switch-when='true'>You have unsaved changes</span>
+      <span class='message' ng-switch-when='false'>Saved at: {{node.lastUpdated}}</span>
+    </span>
+        <button class='btn btn-default pull-right' ng-click='updateNode(node)' type='button'>Save Changes</button>
+    </div>
+    <div ng-include="'nodes/_form.html'"></div>
+</div>

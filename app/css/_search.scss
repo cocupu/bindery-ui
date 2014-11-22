@@ -1,0 +1,15 @@
+.searchContext {
+  form.search-query-form {
+    margin: 0;
+    select, .input-append {
+      margin-bottom: 0;
+    }
+  }
+  .search-query-form {
+    padding-left:25px;
+    margin-right:5px;
+  }
+  #documents {
+    margin-top: 0.25em;
+  }
+}

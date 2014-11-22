@@ -1,0 +1,25 @@
+.node-carousel {
+  .carousel-indicators {
+    bottom:0px;
+  }
+  .carousel-indicators li {
+    border: 1px solid #A52B2B;
+  }
+  .carousel-indicators .active {
+    background-color: #A52B2B;
+  }
+
+  .carousel {
+    height:200px;
+  }
+  .carousel-inner {
+    height:175px;
+    overflow-y: scroll;
+  }
+
+  .carousel-control {
+    height:40px;
+    width:5%;
+    top:40%;
+  }
+}
