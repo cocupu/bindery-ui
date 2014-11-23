@@ -13,8 +13,8 @@ describe "controller: LoginController ($httpBackend.expect().respond, vanilla ja
 
   describe "successfully logging in", ->
     it "should redirect you to /home", ->
-      @$httpBackend.expectPOST('/users/sign_in.json', {user:@scope.credentials}).respond(200)
-      @$httpBackend.expectGET('/identities.json?q=current_user').respond([{"id":3,"name":"Nina Simone","created_at":"2013-08-01T22:05:37.766Z","updated_at":"2013-08-01T22:05:37.766Z","short_name":"ninasimone","url":"/ninasimone"}])
+      @$httpBackend.expectPOST('http://bindery.cocupu.com/users/sign_in.json', {user:@scope.credentials}).respond(200)
+      @$httpBackend.expectGET('http://bindery.cocupu.com/identities.json?q=current_user').respond([{"id":3,"name":"Nina Simone","created_at":"2013-08-01T22:05:37.766Z","updated_at":"2013-08-01T22:05:37.766Z","short_name":"ninasimone","url":"/ninasimone"}])
       @scope.login()
       @$httpBackend.flush()
       expect(@redirect).toHaveBeenCalledWith('identity.pools', {identityName:"ninasimone"})

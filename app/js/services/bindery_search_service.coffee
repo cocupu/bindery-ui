@@ -1,6 +1,6 @@
 class BinderySearchService extends AngularService
   @register angular.module('curateDeps')
-  @inject 'ContextService', 'BinderyNode', '$http'
+  @inject 'ContextService', 'BinderyServer', 'BinderyNode', '$http'
 	
 	#
 	# Default Property Values
@@ -28,7 +28,7 @@ class BinderySearchService extends AngularService
       @queryString = @queryString.toLowerCase()
     else
       @queryString = ""
-    @$http.get(@ContextService.binderyBaseUrl + @ContextService.poolUrl+ "/search.json", {
+    @$http.get(@BinderyServer.baseUrl + @ContextService.poolUrl+ "/search.json", {
       params: @queryParams()
     }).success( (data) =>
       @processResults(data);

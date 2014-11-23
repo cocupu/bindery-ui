@@ -1,5 +1,5 @@
-angular.module('curateDeps').factory('BinderyModel', ['$resource', 'MemoService', ($resource, memoService) ->
-        BinderyModel = $resource('/models/:modelId.json', { modelId:'@id' }, {
+angular.module('curateDeps').factory('BinderyModel', ['$resource', 'MemoService', 'BinderyServer', ($resource, memoService, bindery) ->
+        BinderyModel = $resource(bindery.baseUrl+'/models/:modelId.json', { modelId:'@id' }, {
             update: { method: 'PUT' },
             query: {
                 method: 'GET'

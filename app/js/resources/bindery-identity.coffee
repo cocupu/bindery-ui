@@ -1,6 +1,6 @@
-angular.module('curateDeps').factory('BinderyIdentity', ['$resource', ($resource) ->
+angular.module('curateDeps').factory('BinderyIdentity', ['$resource','BinderyServer', ($resource,bindery) ->
 
-  BinderyIdentity = $resource("/identities/:name.json", {name:'@identityName'}, {
+  BinderyIdentity = $resource(bindery.baseUrl+"/identities/:name.json", {name:'@identityName'}, {
     update: { method: 'PUT' }
   })
 

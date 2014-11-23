@@ -1,6 +1,6 @@
-angular.module('curateDeps').factory('BinderySpreadsheet', ['$resource', '$location', 'BinderyModel', 'memoService', ($resource, $location, BinderyModel, memoService) ->
+angular.module('curateDeps').factory('BinderySpreadsheet', ['$resource', '$location', 'BinderyModel', 'memoService', 'BinderyServer', ($resource, $location, BinderyModel, memoService, bindery) ->
 
-  BinderySpreadsheet = $resource(":identityId/:poolId/spreadsheets/:nodeId.json", {nodeId:'@id'}, {
+  BinderySpreadsheet = $resource(bindery.baseUrl+"/:identityId/:poolId/spreadsheets/:nodeId.json", {nodeId:'@id'}, {
     update: { method: 'PUT' }
   })
 

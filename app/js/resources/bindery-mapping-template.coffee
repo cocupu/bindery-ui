@@ -1,6 +1,6 @@
-angular.module('curateDeps').factory('BinderyMappingTemplate', ['$resource', '$location', 'BinderyModel', 'memoService', ($resource, $location, BinderyModel, memoService) ->
+angular.module('curateDeps').factory('BinderyMappingTemplate', ['$resource', '$location', 'BinderyModel', 'memoService', 'BinderyServer', ($resource, $location, BinderyModel, memoService, bindery) ->
 
-  BinderyMappingTemplate = $resource(":identityId/:poolId/mapping_templates/:templateId", {templateId:'@id'}, {
+  BinderyMappingTemplate = $resource(bindery.baseUrl+"/:identityId/:poolId/mapping_templates/:templateId", {templateId:'@id'}, {
     update: { method: 'PUT' }
   })
 

@@ -3,7 +3,9 @@ describe "service: BinderySearchService", ->
   Given -> module("app")
   
   Given -> module ($provide) -> 
-    $provide.constant('ContextService', {"binderyBaseUrl":"http://localhost:5555", "poolUrl":"/fooId/barPool"}) 
+    $provide.constant('BinderyServer', {"baseUrl":"http://localhost:5555"}) 
+    $provide.constant('ContextService', {"poolUrl":"/fooId/barPool"}) 
+
   
   Given -> inject ($http, @$httpBackend, ContextService, BinderyNode, @BinderySearchService) =>
     @$httpGet  = spyOn($http, 'get').andCallThrough()

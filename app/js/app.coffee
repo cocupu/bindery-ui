@@ -1,9 +1,22 @@
 angular.module('curateDeps', ['ng', "ngResource", 'ui.bootstrap', 'ngGrid', 'ngRoute', 'ui.router', 'ui.sortable', 'Devise'])  #, "ngRoute"
+BinderyServer = {
+  baseUrl: "http://bindery.cocupu.com"
+}
+angular.module('curateDeps').factory('BinderyServer', [ () ->
+  return BinderyServer
+])
+
 app = angular.module("app", ["ngResource", "ngRoute", 'curateDeps'])
 
 app.config(['$httpProvider', ($httpProvider) ->
   $httpProvider.defaults.useXDomain = true;
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
+])
+
+app.config(['AuthProvider', (AuthProvider) ->
+  AuthProvider.loginPath(BinderyServer.baseUrl+'/users/sign_in.json');
+  AuthProvider.logoutPath(BinderyServer.baseUrl+'/users/sign_out.json');
+  AuthProvider.registerPath(BinderyServer.baseUrl+'/users.json');
 ])
 
 app.run( ($rootScope) ->

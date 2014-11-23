@@ -1,6 +1,6 @@
-angular.module('curateDeps').factory('BinderyAudienceCategory', ['$resource', 'BinderyAudience', ($resource, BinderyAudience) ->
+angular.module('curateDeps').factory('BinderyAudienceCategory', ['$resource', 'BinderyAudience','BinderyServer', ($resource, BinderyAudience, bindery) ->
 
-  BinderyAudienceCategory = $resource("/:identityName/:poolName/audience_categories/:categoryId", {identityName:'@identity_name', poolName:'@pool_name', categoryId:'@id'}, {
+  BinderyAudienceCategory = $resource(bindery.baseUrl+"/:identityName/:poolName/audience_categories/:categoryId", {identityName:'@identity_name', poolName:'@pool_name', categoryId:'@id'}, {
     update: { method: 'PUT' }
   })
 
