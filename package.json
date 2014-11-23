@@ -1,7 +1,7 @@
 {
   "name": "bindery-ui",
   "title": "AngularJS Frontend for DataBindery API Platform",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "author": {
     "name": "Matthew Zumwalt",
@@ -15,12 +15,13 @@
     "angular-resource": "1.2.9",
     "ng-sanitize": "1.2.9",
     "angular-bootstrap": "~0.10",
-    "ng-grid": "~2.0.7",
+    "ng-grid": "2.0.7",
     "jquery-file-upload": "~9.5.0",
     "blueimp-load-image": "~1.11.0"
   },
   "dependencies": {
-    "angular": "=1.2.9"
+    "angular": "=1.2.9",
+    "bower": "1.3.12"
   },
   "devDependencies": {
     "protractor": ">=0.8.0",
@@ -31,6 +32,7 @@
   },
   "scripts": {
     "start": "lineman run",
-    "test": "lineman spec-ci"
+    "test": "lineman spec-ci",
+    "postinstall": "./node_modules/bower/bin/bower install; cp -r vendor/bower/bootstrap/less vendor/bower/bootstrap/dist/css/"
   }
 }

@@ -1,8 +1,9 @@
-angular.module('curateDeps', ['ng', "ngResource", 'ui.bootstrap', 'ngGrid', 'ngRoute', 'ui.router', 'ui.sortable', 'Devise'])  #, "ngRoute"
 BinderyServer = {
   baseUrl: "http://bindery.cocupu.com"
 }
-angular.module('curateDeps').factory('BinderyServer', [ () ->
+
+curateDeps = angular.module('curateDeps', ['ng', "ngResource", 'ui.bootstrap', 'ngGrid', 'ngRoute', 'ui.router', 'ui.sortable', 'Devise'])  #, "ngRoute"
+curateDeps.factory('BinderyServer', [ () ->
   return BinderyServer
 ])
 

@@ -28,7 +28,7 @@ module.exports = require(process.env['LINEMAN_MAIN']).config.extend('application
 			      spawn: false,
 			    }
 	  },
-	},
+	},   // concat_sourcemap breaks on deploy because bootstrap has a bad reference in its sourcemap. See, for example https://github.com/linemanjs/lineman/issues/300
 	concat_sourcemap: {
     js: {
       src: [

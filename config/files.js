@@ -23,7 +23,7 @@ module.exports = require(process.env['LINEMAN_MAIN']).config.extend('files', {
       "vendor/bower/angular-bootstrap/ui-bootstrap.js",
       "vendor/bower/angular-bootstrap/ui-bootstrap-tpls.js",
       "vendor/bower/angular-ui-router/release/angular-ui-router.js",
-      "vendor/bower/ng-grid/ng-grid-2.0.7.min.js ",
+      "vendor/bower/ng-grid/ng-grid-2.0.7.min.js",
       "vendor/bower/ui-sortable/sortable.js",
       "vendor/bower/angular-devise/lib/devise.js",
       "vendor/js/**/*.js"
