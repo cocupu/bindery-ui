@@ -31,21 +31,19 @@ ResultsGridCtrl = ($scope, $stateParams, $http, $location, BinderyModel, Bindery
     pagingOptions: $scope.pagingOptions,
     filterOptions: $scope.filterOptions,
     afterSelectionChange: (rowItem, event) ->
-      console.log("Selection change!")
       if ($scope.currentNode == rowItem)
-        console.log("... already selected")
 #        This is where we could focus on field control corresponding to selected cell
         selectedCell = $('.ngCellElement:focus')
         if (selectedCell.length > 0)
           selectedCol = selectedCell.attr('class').split(" ").filter( (x) -> return x.indexOf("colt") > -1 )[0]
           $(".fieldControl."+selectedCol).focus()
       else
-        console.log("... setting currentNode")
         $scope.currentNode = rowItem
 
 
   $scope.$on('ngGridEventSorted', (event, data) ->
-    $scope.sortInfo = $scope.sortInfo.concat({field: $scope.fieldIdFromGridColumn(data.fields[0]), direction: data.directions[0]})
+    SearchService.addSortField($scope.fieldIdFromGridColumn(data.fields[0]), data.directions[0])
+    console.log(SearchService.sorting)
   )
 
   $scope.fieldIdFromGridColumn = (gridField) ->

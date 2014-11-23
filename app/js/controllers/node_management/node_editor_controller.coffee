@@ -1,6 +1,14 @@
 NodeEditorCtrl = ($scope, $stateParams, $http, $location, BinderyModel, BinderyNode, memoService, context, SearchService) ->
 
-  $scope.model = $scope.node.model()
+  if (typeof($scope.node) == "undefined")
+    BinderyNode.get({identityName:$stateParams.identityName, poolName:$stateParams.poolName, nodeId: $stateParams.nodeId}, (data)->
+      memoService.createOrUpdate("BinderyNode", data)
+      $scope.node = data
+      $scope.model = $scope.node.model()
+    )
+  else
+    $scope.model = $scope.node.model()
+
 
   $scope.updateNode = (node) ->
     node.$update( (savedNode, putResponseHeaders) ->

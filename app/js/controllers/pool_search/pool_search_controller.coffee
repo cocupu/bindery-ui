@@ -12,7 +12,6 @@ PoolSearchCtrl = ($scope, $stateParams, $http, $location, BinderyModel, BinderyN
   $scope.searchResponse = SearchService.searchResponse
   $scope.docs = SearchService.docs
   $scope.totalServerItems = SearchService.totalServerItems
-  $scope.sortInfo = SearchService.sorting
 
   $scope.searchUrl = $location.path()+".json"
   $scope.detailPanelState = "node"

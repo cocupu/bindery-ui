@@ -13,9 +13,8 @@
   </div>
   <div class="facet-limit">
       <h5>Sort</h5>
-      {{sortInfo}}
-      <div ng-repeat="sort in searchService.sorting">
-          {{sort.field}} {{sort.direction}}
-      </div>
+      [<div ng-repeat="sort in searchService.sorting">
+          {{sort}}
+      </div>]
   </div>
 </div>

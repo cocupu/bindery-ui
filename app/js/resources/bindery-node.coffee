@@ -1,6 +1,6 @@
 angular.module('curateDeps').factory('BinderyNode', ['$resource', '$location', 'BinderyModel', 'MemoService', 'BinderyNodeAssociations', ($resource, $location, BinderyModel, MemoService, BinderyNodeAssociations) ->
 
-  BinderyNode = $resource($location.path().replace("search","nodes")+"/:nodeId.json", {nodeId:'@persistent_id'}, {
+  BinderyNode = $resource("/:identityName/:poolName/nodes/:nodeId.json", {identityName:'@identity', poolName:'@short_name',nodeId:'@persistent_id'}, {
       update: { method: 'PUT' }
   })
 
@@ -25,7 +25,7 @@ angular.module('curateDeps').factory('BinderyNode', ['$resource', '$location', '
     # If model isn't already in memoService cache, load it and cache it.
     # Note: this assumes behavior of being called repeatedly if it returns nil. (which is how the $digest cycle seems to work)
     if (typeof(model) == "undefined")
-      BinderyModel.get({modelId: this.model_id}, (data)->
+      model = BinderyModel.get({modelId: this.model_id}, (data)->
         MemoService.createOrUpdate("BinderyModel", data)
       )
     return model

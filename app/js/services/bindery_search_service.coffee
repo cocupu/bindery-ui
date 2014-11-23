@@ -58,4 +58,8 @@ class BinderySearchService extends AngularService
       params.model_id = @model_id
     return params
 
-  sortingOptions: () ->
+  addSortField: (field, direction) ->
+    filtered = @sorting.filter( (sortEntry) ->  return typeof(sortEntry[field]) == 'undefined' )
+    sortEntry = {}
+    sortEntry[field] = direction
+    @sorting = [sortEntry].concat(filtered)

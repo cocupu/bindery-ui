@@ -1,5 +1,5 @@
 <form class='node-editor form-horizontal' role="form">
-    <div class='field form-group' ng-repeat='fieldConfig in node.model().fields.concat(node.model().associations)'>
+    <div class='field form-group' ng-repeat='fieldConfig in model.fields.concat(model.associations)'>
         <label class="col-sm-2 control-label" for="{{node.persistent_id+'_'+fieldConfig.id}}">
             {{fieldConfig.name}}
             <span class='field-helper' ng-show="fieldConfig.type == 'date'">{{node.data[fieldConfig.id]}}</span>

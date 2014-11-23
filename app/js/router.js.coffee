@@ -68,4 +68,9 @@ angular.module("app").config( ($stateProvider, $urlRouterProvider) ->
       templateUrl: "pools/edit.html",
       controller: 'PoolEditorCtrl'
     })
+    .state('curate.pool.node', {
+      url: "/{nodeId}",
+      templateUrl: "nodes/edit.html",
+      controller: 'NodeEditorCtrl'
+    })
   )
