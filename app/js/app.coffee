@@ -1,5 +1,6 @@
 BinderyServer = {
-  baseUrl: "http://bindery.cocupu.com"
+#  baseUrl: "http://bindery.cocupu.com"
+  baseUrl: ""
 }
 
 curateDeps = angular.module('curateDeps', ['ng', "ngResource", 'ui.bootstrap', 'ngGrid', 'ngRoute', 'ui.router', 'ui.sortable', 'Devise'])  #, "ngRoute"
