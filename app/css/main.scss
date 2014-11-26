@@ -6,11 +6,24 @@
 @import "search";
 @import "node_carousel";
 
+.testing.block {
+  background-color: #5f9ea0;
+  border: 1px dotted black;
+}
 
 body {
   color: #333;
   margin-top: 50px;
   padding-left: 15px;  /* This is fixing content so it doesn't wander off the left side of page or behind the navbar */
+}
+
+.container-fluid {
+  padding-left:0px;
+  padding-right:0px;
+}
+
+.layout-chooser {
+  margin-bottom: 0px;
 }
 
 .remove {

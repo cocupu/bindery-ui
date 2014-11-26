@@ -45,6 +45,7 @@ PoolSearchCtrl = ($scope, $stateParams, $http, $location, BinderyModel, BinderyN
   $scope.runQuery()
 
   $scope.$watch('pagingOptions', ((newVal, oldVal) ->
+#    if (newVal != oldVal && newVal.currentPage != oldVal.currentPage)
     if (newVal != oldVal && newVal.currentPage != oldVal.currentPage)
       $scope.runQuery()
   ), true)

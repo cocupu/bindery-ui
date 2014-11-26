@@ -58,15 +58,27 @@ ResultsGridCtrl = ($scope, $stateParams, $http, $location, BinderyModel, Bindery
   # TODO: This is DOM Manipulation.  It should be implemented in a directive.
   #
   $scope.resizeGrid = () ->
-    staticElementsHeight = $(".row").height() + $(".headsup").not(":hidden").height() + $(".navbar-fixed-top").height() + $(".navbar-fixed-bottom").height()
-    newHeight = Math.max(100, $(window).height() - staticElementsHeight)
+    staticElementsHeight =   10+ $(".headsup").height() + $(".navbar-fixed-top").height() + $(".layout-chooser").height() + $(".navbar-fixed-bottom").height()
+    newHeight = $(window).height() -  staticElementsHeight
+    if $scope.sidebarVisible
+      newWidth = $(window).width() - 286
+    else
+      newWidth = $(window).width()
+
     $(".ngGrid").height(newHeight)
+    $(".ngGrid").width(newWidth)
 
   # Trigger on load and  when page resizes
   $( document ).ready( () -> $scope.resizeGrid() )
   $( window ).resize( () ->
     $scope.resizeGrid()
   )
+  $scope.$watch('headsupVisible',  () ->
+    $(window).trigger('resize');
+  , true)
+  $scope.$watch('sidebarVisible',  (newValue, oldValue) ->
+    $(window).trigger('resize');
+  , true)
 
 ResultsGridCtrl.$inject = ['$scope', '$stateParams', '$http', '$location', 'BinderyModel', 'BinderyNode', 'MemoService', 'ContextService', 'BinderySearchService']
 angular.module("curateDeps").controller('ResultsGridCtrl', ResultsGridCtrl)
