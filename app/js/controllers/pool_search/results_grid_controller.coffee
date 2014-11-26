@@ -43,8 +43,11 @@ ResultsGridCtrl = ($scope, $stateParams, $http, $location, BinderyModel, Bindery
 
   $scope.$on('ngGridEventSorted', (event, data) ->
     SearchService.addSortField($scope.fieldIdFromGridColumn(data.fields[0]), data.directions[0])
-    console.log(SearchService.sorting)
   )
+
+  $scope.$watch('searchService.sorting',  () ->
+    $scope.runQuery()
+  , true)
 
   $scope.fieldIdFromGridColumn = (gridField) ->
     regex = new RegExp(/data\[\'([0-9]*)\'\]/)

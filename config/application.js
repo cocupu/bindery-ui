@@ -17,7 +17,7 @@ module.exports = require(process.env['LINEMAN_MAIN']).config.extend('application
     apiProxy: {
       enabled: true,
       port: 8080,
-      prefix: 'http://bindery.cocupu.com/'
+      prefix: '/'
     }
   },
   watch: {

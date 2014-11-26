@@ -16,6 +16,7 @@ class BinderySearchService extends AngularService
   selectedNode: {}
   queryString: ""
   sorting: []
+  facetConstraints: []
   
   #
   # Methods
@@ -53,13 +54,22 @@ class BinderySearchService extends AngularService
       q: @queryString
     }
     if(@sorting.length > 0)
-      params.sort = $.map(@sorting, (sort, i) -> return sort.field.code + " " +sort.direction ).join()
+      sortFields = $.map(@sorting, (entry) ->
+        obj = {}
+        obj[entry.field.id] = entry.direction
+        return obj
+      )
+      params["sort_fields"] = JSON.stringify(sortFields)
+#      angular.forEach(@sorting, (sortEntry) -> params["sort_fields[]["+sortEntry.field.id+"]"] = sortEntry.direction )
     unless (typeof @model_id == "undefined")
       params.model_id = @model_id
     return params
 
-  addSortField: (field, direction) ->
-    filtered = @sorting.filter( (sortEntry) ->  return typeof(sortEntry[field]) == 'undefined' )
-    sortEntry = {}
-    sortEntry[field] = direction
-    @sorting = [sortEntry].concat(filtered)
+  addSortField: (field_id, direction) ->
+    currentFields = $.map(@sorting, (entry) -> return entry.field.id )
+    # Do nothing if the requested sort is already set
+    if currentFields.indexOf(field_id) > -1 && @sorting[currentFields.indexOf(field_id)].direction == direction
+      return true
+    else
+      filtered = @sorting.filter( (sortEntry) ->  return sortEntry.field.id != field_id )
+      @sorting = [{field:{id:field_id}, direction:direction}].concat(filtered)
