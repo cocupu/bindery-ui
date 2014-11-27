@@ -1,22 +1,14 @@
-<div id="login" class="row">
-  <div class="large-6 large-offset-3">
+<div id="login">
+  <div class="col-xs-4">
     <form ng-submit="login()">
-      <fieldset class="radius">
-        <div class="row">
-          <div class="large-6 columns">
-            <input type="text" name="email" placeholder="email" ng-model="credentials.email" required/>
-          </div>
-            <div class="large-6 columns">
-              <input type="password" name="password" placeholder="password" ng-model="credentials.password" required/>
-          </div>
-        </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="text" class="form-control" name="email" placeholder="email" ng-model="credentials.email" required/>
+        <label>Password</label>
+        <input type="password" class="form-control" name="password" placeholder="password" ng-model="credentials.password" required/>
+      </div>
 
-        <div class="row">
-          <div class="large-12 columns">
-            <button id="log-in" type="submit" class="button large expand radius">Log In</button>
-          </div>
-        </div>
-      </fieldset>
+      <button id="log-in" type="submit" class="btn btn-default">Log In</button>
     </form>
   </div>
 </div>

@@ -1,7 +1,7 @@
 <h2>Welcome to DataBindery</h2>
 
 <div ng-hide="isAuthenticated()">
-    Want to log in?
+    <p class="help-block">Want to log in?</p>
     <div ng-controller="LoginController" ng-include="'login.html'"></div>
 </div>
 <div ng-show="isAuthenticated()">

@@ -48,3 +48,9 @@ To run the end-to-end tests:
     If you see this error: Fatal error: The path to the driver executable must be set by the
     webdriver.chrome.driver system property, you may need to download the chromedriver
     (https://code.google.com/p/selenium/wiki/ChromeDriver) and place it in /usr/local/bin (mac).
+
+## Notes
+
+### Routing
+
+Currently the code uses ui-router to handle state between pages and mappings between url and state.  It seemed like a good idea at the time, but I plan to tear it out.  See [issue #3](https://github.com/cocupu/bindery-ui/issues/3).

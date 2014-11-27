@@ -17,6 +17,7 @@ class BinderySearchService extends AngularService
   queryString: ""
   sorting: []
   facetConstraints: []
+  facets: {}
   
   #
   # Methods
@@ -44,6 +45,7 @@ class BinderySearchService extends AngularService
     @searchResponse = data
     @docs = data.docs
     @totalServerItems = data.response.numFound
+    @parseFacets()
     
   # Wrangles the BinderyService's current properties for submitting as params on your HTTP query to DataBindery   
   # @returns a js object with "rows", "page", "q" and (optionally) "model_id"      
@@ -73,3 +75,19 @@ class BinderySearchService extends AngularService
     else
       filtered = @sorting.filter( (sortEntry) ->  return sortEntry.field.id != field_id )
       @sorting = [{field:{id:field_id}, direction:direction}].concat(filtered)
+
+  # Parse solr's facet field array into an array of facetField objects
+  parseFacets: () ->
+    if @searchResponse.facet_counts
+      facet_fields = @searchResponse.facet_counts.facet_fields
+    if typeof(facet_fields) != "undefined"
+      newFacets = {}
+      angular.forEach(facet_fields, (solrFacetValuesArray, facetName, obj) ->
+        facetValues = $.map(solrFacetValuesArray, (ff,i) ->
+          if (i%2 == 0)
+            return {value: ff, count: solrFacetValuesArray[i+1]}
+        )
+        newFacets[facetName] = facetValues
+      )
+
+    return @facets = newFacets
