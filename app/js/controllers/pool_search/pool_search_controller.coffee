@@ -12,6 +12,11 @@ PoolSearchCtrl = ($scope, $stateParams, $http, $location, BinderyModel, BinderyN
   $scope.searchResponse = SearchService.searchResponse
   $scope.docs = SearchService.docs
   $scope.totalServerItems = SearchService.totalServerItems
+  $scope.facetsToDisplay = () -> 
+    returnedFacets = $.map(SearchService.facets, (values, facetName) ->
+      return facetName
+    )
+    return returnedFacets
 
   $scope.searchUrl = $location.path()+".json"
   $scope.detailPanelState = "node"
@@ -30,34 +35,38 @@ PoolSearchCtrl = ($scope, $stateParams, $http, $location, BinderyModel, BinderyN
     pageSize: 25,
     currentPage: 1
 
-  $scope.runQuery = () ->
-    SearchService.pagingOptions.pageSize = $scope.pagingOptions.pageSize
-    SearchService.pagingOptions.currentPage = $scope.pagingOptions.currentPage
-    #    SearchService.queryString = $scope.filterOptions.filterText
-    SearchService.runQuery().then( (data) ->
+  # $scope.runQuery = () ->
+  #   SearchService.pagingOptions.pageSize = $scope.pagingOptions.pageSize
+  #   SearchService.pagingOptions.currentPage = $scope.pagingOptions.currentPage
+  #   #    SearchService.queryString = $scope.filterOptions.filterText
+  #   SearchService.runQuery().then( (data) ->
+  #     $scope.docs = SearchService.docs
+  #     $scope.searchResponse = SearchService.searchResponse
+  #     $scope.totalServerItems = SearchService.totalServerItems
+  #     if (!$scope.$$phase)
+  #       $scope.$apply()
+  #   )
+
+  SearchService.runQuery()
+
+  $scope.$watch('searchService.docs', ((newVal, oldVal) ->
+    if (newVal != oldVal)
       $scope.docs = SearchService.docs
-      $scope.searchResponse = SearchService.searchResponse
-      $scope.totalServerItems = SearchService.totalServerItems
-      if (!$scope.$$phase)
-        $scope.$apply()
-    )
-
-  $scope.runQuery()
-
+  ), true)
+  
   $scope.$watch('pagingOptions', ((newVal, oldVal) ->
-#    if (newVal != oldVal && newVal.currentPage != oldVal.currentPage)
     if (newVal != oldVal && newVal.currentPage != oldVal.currentPage)
-      $scope.runQuery()
+      SearchService.runQuery()
   ), true)
 
   $scope.$watch('filterOptions', ((newVal, oldVal) ->
     if (newVal != oldVal)
-      $scope.runQuery()
+      SearchService.runQuery()
   ), true);
 
   $scope.$watch('searchService.queryString', ((newVal, oldVal) ->
     if (newVal != oldVal)
-      $scope.runQuery()
+      SearchService.runQuery()
   ), true);
 
   

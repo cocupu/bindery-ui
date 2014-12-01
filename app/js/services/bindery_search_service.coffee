@@ -62,11 +62,42 @@ class BinderySearchService extends AngularService
         return obj
       )
       params["sort_fields"] = JSON.stringify(sortFields)
-#      angular.forEach(@sorting, (sortEntry) -> params["sort_fields[]["+sortEntry.field.id+"]"] = sortEntry.direction )
+    if(@facetConstraints.length > 0)
+      angular.forEach(@facetConstraints, (entry, idx) ->
+        params["f["+entry.fieldName+"][]"] = entry.value
+      )
     unless (typeof @model_id == "undefined")
       params.model_id = @model_id
     return params
 
+  addFacetFilter: (facetFieldName, filterValue) ->
+    newConstraint = {fieldName:facetFieldName, value:filterValue}
+    @facetConstraints = @facetConstraints.concat(newConstraint)
+    @runQuery()
+
+  removeFacetFilter: (facetFieldName, filterValue) ->
+    @facetConstraints = @facetConstraints.filter( (entry) ->  return entry.fieldName != facetFieldName || entry.value != filterValue )
+    @runQuery()
+    
+  isConstrainingBy: (facetFieldName, filterValue=undefined) ->
+    @facetConstraints.filter( (entry) ->  return entry.fieldName == facetFieldName && (entry.value == filterValue || filterValue==undefined) ).length > 0
+
+  constraintsFor: (facetFieldName) ->
+    @facetConstraints.filter( (entry) ->  return entry.fieldName == facetFieldName ) 
+
+  facetValuesFor: (facetFieldName) ->
+    values = @facets[facetFieldName]
+    if values == undefined
+      if @isConstrainingBy(facetFieldName)
+        return $.map(@constraintsFor(facetFieldName), (constraint) -> 
+          return {value: constraint.value}
+        )
+      else
+        return []
+    else
+      return values
+        
+    
   addSortField: (field_id, direction) ->
     currentFields = $.map(@sorting, (entry) -> return entry.field.id )
     # Do nothing if the requested sort is already set
@@ -81,13 +112,20 @@ class BinderySearchService extends AngularService
     if @searchResponse.facet_counts
       facet_fields = @searchResponse.facet_counts.facet_fields
     if typeof(facet_fields) != "undefined"
-      newFacets = {}
+      updatedFacets = {}
       angular.forEach(facet_fields, (solrFacetValuesArray, facetName, obj) ->
         facetValues = $.map(solrFacetValuesArray, (ff,i) ->
           if (i%2 == 0)
             return {value: ff, count: solrFacetValuesArray[i+1]}
         )
-        newFacets[facetName] = facetValues
+        if facetValues.length > 0
+          updatedFacets[facetName] = facetValues
       )
-
-    return @facets = newFacets
+    else
+      updatedFacets = []
+      
+    angular.forEach(@facetConstraints, (constraint) ->
+      if updatedFacets[constraint.fieldName] == undefined
+        updatedFacets[constraint.fieldName] = [{value:constraint.value}]
+    )
+    return @facets = updatedFacets

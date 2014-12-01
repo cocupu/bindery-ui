@@ -2,7 +2,7 @@ ResultsGridCtrl = ($scope, $stateParams, $http, $location, BinderyModel, Bindery
   $scope.setCurrentModel = (model) ->
     $scope.currentModel = model
     SearchService.model_id = model.id
-    $scope.runQuery()
+    SearchService.runQuery()
     $scope.columnDefs = model.columnDefsFromModel()
 
   #
@@ -46,7 +46,7 @@ ResultsGridCtrl = ($scope, $stateParams, $http, $location, BinderyModel, Bindery
   )
 
   $scope.$watch('searchService.sorting',  () ->
-    $scope.runQuery()
+    SearchService.runQuery()
   , true)
 
   $scope.fieldIdFromGridColumn = (gridField) ->
@@ -65,6 +65,7 @@ ResultsGridCtrl = ($scope, $stateParams, $http, $location, BinderyModel, Bindery
     else
       newWidth = $(window).width()
 
+    $(".sidebar").height(newHeight + $(".headsup").height())
     $(".ngGrid").height(newHeight)
     $(".ngGrid").width(newWidth)
 

@@ -26,6 +26,12 @@ body {
   margin-bottom: 0px;
 }
 
+.sidebar {
+  overflow-y: scroll;
+  overflow-wrap: break-word;
+  padding-left: 10px;
+}
+
 .remove {
   color: rgb(117, 36, 36);
 }
