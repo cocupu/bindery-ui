@@ -1,17 +1,18 @@
 <div class="sidebar">
+  <h1>{{context.pool.name}}</h1>
   <div class="facet-limit">
     <h5>Query String</h5>
     <input class="form-control" ng-model="searchService.queryString"></input>
   </div>
   <div class="facet-limit">
-      <h5>Sort</h5>
+      <h5>Sorting by</h5>
       <ul class="sort-fields">
         <li ng-repeat="sort in searchService.sorting">
-            {{sort}}
+            {{sort.field.id}} : <span ng-click="searchService.toggleSortDirection(sort)">{{sort.direction}}</span> <a class="remove" ng-click="searchService.removeSortField(sort.field.id)">X</a>
         </li>
       </ul>
   </div>
-  <h1>Filters</h1>
+  <h3>Filters</h3>
   <div class="facet-limit" ng-repeat="facetName in facetsToDisplay()">
     <h5>{{facetName}}</h5>
     <ul class="facet-values list-unstyled">

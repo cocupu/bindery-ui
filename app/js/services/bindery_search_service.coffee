@@ -96,8 +96,7 @@ class BinderySearchService extends AngularService
         return []
     else
       return values
-        
-    
+
   addSortField: (field_id, direction) ->
     currentFields = $.map(@sorting, (entry) -> return entry.field.id )
     # Do nothing if the requested sort is already set
@@ -129,3 +128,12 @@ class BinderySearchService extends AngularService
         updatedFacets[constraint.fieldName] = [{value:constraint.value}]
     )
     return @facets = updatedFacets
+
+  removeSortField: (fieldId) ->
+    @sorting = @sorting.filter( (entry) ->  return entry.field.id != fieldId )
+  
+  toggleSortDirection: (sort) ->
+    if sort.direction == "asc"
+      @addSortField(sort.field.id, "desc")
+    else
+      @addSortField(sort.field.id, "asc")

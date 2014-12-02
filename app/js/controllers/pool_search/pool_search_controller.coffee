@@ -4,6 +4,7 @@ PoolSearchCtrl = ($scope, $stateParams, $http, $location, BinderyModel, BinderyN
   # General Scope properties
   $scope.controller = "search"
   context.initialize($stateParams.identityName, $stateParams.poolName)
+  $scope.context = context
   $scope.stateParams = $stateParams
 
   $scope.poolUrl = context

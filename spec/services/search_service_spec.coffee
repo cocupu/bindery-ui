@@ -55,13 +55,25 @@ describe "service: BinderySearchService", ->
   describe "#addSortField prepends new fields to the array", ->
     When  -> @BinderySearchService.addSortField(55,"desc")
     And  -> @BinderySearchService.addSortField(86,"asc")
-    Then  -> expect(@BinderySearchService.sorting.toString()).toBe([{field:{id:86},direction:"asc"},{field:{id:55},direction:"desc"}].toString())
+    Then  -> expect(@BinderySearchService.sorting).toEqual([{field:{id:86},direction:"asc"},{field:{id:55},direction:"desc"}])
 
   describe "#addSortField updates rather than repeats fields when switching the sort direction", ->
     When  -> @BinderySearchService.addSortField(55,"desc")
     And  -> @BinderySearchService.addSortField(86,"asc")
     And  -> @BinderySearchService.addSortField(55,"asc")
-    Then  -> expect(@BinderySearchService.sorting.toString()).toBe([{field:{id:55},direction:"asc"},{field:{id:86},direction:"asc"}].toString())
+    Then  -> expect(@BinderySearchService.sorting).toEqual([{field:{id:55},direction:"asc"},{field:{id:86},direction:"asc"}])
+  
+  describe "#removeSortField", ->
+    When  -> @BinderySearchService.addSortField(55,"desc")
+    And  -> @BinderySearchService.addSortField(86,"asc")
+    And  -> @BinderySearchService.addSortField(108,"asc")
+    And  -> @BinderySearchService.removeSortField(86)
+    Then  -> expect(@BinderySearchService.sorting).toEqual([{field:{id:108},direction:"asc"},{field:{id:55},direction:"desc"}])
+
+  describe "#toggleSortDirection toggles from current direction to the inverse", ->
+    When  -> @BinderySearchService.addSortField(55,"desc")
+    And  -> @BinderySearchService.toggleSortDirection({field:{id:55},direction:"desc"})
+    Then  -> expect(@BinderySearchService.sorting[0].direction).toEqual("asc")
 
   describe "#parseFacets", ->
     When  -> @BinderySearchService.searchResponse = @sampleResponseWithFacets
