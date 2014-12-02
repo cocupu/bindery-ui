@@ -25,7 +25,7 @@ LoginController = ($scope, $state, context, Auth, BinderyIdentity) ->
   )
 
   $scope.loginSuccess = (currentUser) ->
-    BinderyIdentity.query(q:'current_user', (identities) ->
+    BinderyIdentity.query(email:currentUser.email, (identities) ->
       $scope.context.initialize(identities[0].short_name)
       $state.go('identity.pools', {identityName:identities[0].short_name})
     )
