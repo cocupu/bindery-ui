@@ -22,3 +22,21 @@
   float: right;
   margin-right: 10px;
 }
+
+.result {
+  .title {}
+  ul.fields {
+    li.field {
+      .dt {
+        width: 160px;
+        text-align: right;
+        float: left;
+        margin-right: 1em;
+        color: #888;
+      }
+      .dd {
+        margin-left: 180px;
+      }
+    }
+  }
+}

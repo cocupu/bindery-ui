@@ -1,6 +1,8 @@
 <div class="listStyle">
   <h1>List Results</h1>
-  <div ng-repeat="node in docs">
-    <a ng-click="selectNode(node)">{{node.title}}</a>
-  </div>
+  <ul class="results list-unstyled">
+    <li class="result" ng-repeat="node in docs" ng-controller="NodeEditorCtrl">
+      <div ng-include="'pools/search/_result.html'"></div>
+    </li>
+  </ul>
 </div>

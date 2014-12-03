@@ -76,9 +76,9 @@ PoolSearchCtrl = ($scope, $stateParams, $http, $location, BinderyModel, BinderyN
   #
   $scope.sidebarVisible = true
   $scope.toggleSidebar = (variable) -> $scope.sidebarVisible = !$scope.sidebarVisible
-  $scope.headsupVisible = true
+  $scope.headsupVisible = false
   $scope.toggleHeadsup = (variable) -> $scope.headsupVisible = !$scope.headsupVisible
-  $scope.resultsLayout = 'grid'
+  $scope.resultsLayout = 'list'
   $scope.setResultsLayout = (layout) -> $scope.resultsLayout = layout
 
   #
@@ -103,6 +103,8 @@ PoolSearchCtrl = ($scope, $stateParams, $http, $location, BinderyModel, BinderyN
   $scope.models = BinderyModel.query({identityName:$stateParams.identityName, poolName:$stateParams.poolName})
     
   $scope.selectNode = (node) ->
+    if !$scope.headsupVisible
+      $scope.toggleHeadsup()
     $scope.selectedNodes[0] = node
     $scope.currentNode = node
 

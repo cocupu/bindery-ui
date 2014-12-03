@@ -1,0 +1,18 @@
+<div class="node">
+  <span class="model-indicator">{{model.name}}</span>
+  <a ng-click="selectNode(node)" class="title">{{node.title}}</a>
+  <ul class="fields list-unstyled">
+    <li class="field" ng-repeat="field in model.fields">
+      <div class="dt">{{field.name}}</div>
+      <div class="dd" ng-if="!field.multivalue">
+        {{node.data[field.id]}}
+      </div>
+      <div class="dd" ng-if="field.multivalue">
+        <ul class="list-unstyled">
+          <li ng-repeat="value in node.data[field.id] track by $index">{{value}}</li>
+        </ul>
+      </div>
+    </li>
+
+  </ul>
+</div>
