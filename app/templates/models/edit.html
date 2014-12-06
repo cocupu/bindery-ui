@@ -1,9 +1,16 @@
 <div ng-hide="model.id">
-  <p>Could not load model.</p>
+  <p>Loading model...</p>
 </div>
 <div ng-show="model.id">
   <ul class='nav nav-tabs nav-pills'>
     <h2>Configure Model: {{model.name}}</h2>
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown">Actions<b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li><a ng-href="#/identity/{{context.identityName}}/pools">Search {{model.name}} nodes</a></li>
+        <li><a ui-sref="curate.pool.nodes.new({modelId:model.id})">Create a new {{model.name}}</a></li>
+      </ul>
+    </li>
     <li ng-class='{active: tab == selectedTab}' ng-repeat='tab in tabs'>
       <a ng-click='selectTab(tab)'>{{tab.label}}</a>
     </li>
@@ -13,4 +20,6 @@
   <div ng-include="'models/_edit_tab_form.html'" ng-show="selectedTab.id == 'form'"></div>
   <div ng-include="'models/_edit_tab_search_result.html'" ng-show="selectedTab.id == 'search_result'"></div>
   <div ng-include="'models/_edit_tab_detail.html'" ng-show="selectedTab.id == 'detail_view'"></div>
+  <div ng-include="'models/_edit_tab_delete.html'" ng-show="selectedTab.id == 'delete_view'"></div>
+
 </div>

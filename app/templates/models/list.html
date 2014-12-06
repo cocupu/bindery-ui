@@ -4,6 +4,9 @@
     <li ng-class='{active: model == currentModel}' ng-repeat='model in models'>
       <a ui-sref="curate.pool.models.edit({modelId:model.id})">{{model.name}}</a>
     </li>
+    <li class="divider"></li>
+    <li><a ng-click="newModel()">Create New Model</a>
   </ul>
+  <!-- <div ng-include="'models/_table.html'" ></div> -->
 </div>
 <ui-view>

@@ -1,5 +1,10 @@
 angular.module('curateDeps').factory('BinderyModel', ['$resource', 'MemoService', 'BinderyServer', ($resource, memoService, bindery) ->
         BinderyModel = $resource(bindery.baseUrl+'/models/:modelId.json', { modelId:'@id' }, {
+            create: { 
+              method: 'POST', 
+              url: '/:identityName/:poolName/models.json', 
+              params: {poolName:'@poolName', identityName:'@identityName', model:@model} 
+            },
             update: { method: 'PUT' },
             query: {
                 method: 'GET'
@@ -25,18 +30,18 @@ angular.module('curateDeps').factory('BinderyModel', ['$resource', 'MemoService'
           )
         
         BinderyModel.typeOptionsFor = (fieldType) ->
-          associationTypes = [{label:"Associaton (Has Many)", id:"Has Many"}, {label:"Associaton (Has One)", id:"Has One"}]
-          fieldTypes = [{label:"Text Field", id:"string"},{label:"Text Area", id:"textarea"}, {label:"Integer", id:"integer"}, {label:"Date", id:"date"}]
-          if (["Has One", "Has Many"].indexOf(fieldType) > -1)
+          associationTypes = [{label:"Associaton (Has Many)", id:"OrderedListAssociation"}]
+          fieldTypes = [{label:"Text Field", id:"TextField"},{label:"Text Area", id:"TextArea"}, {label:"Integer", id:"IntegerField"}, {label:"Date", id:"DateField"}]
+          if (["OrderedListAssociation"].indexOf(fieldType) > -1)
             return associationTypes
           else
             return fieldTypes
 
         BinderyModel.prototype.addField = () ->
-          this.fields.push({name: "New Field", code:"", type:"text"})
+          this.fields.push({name: "New Field", code:"", type:"TextField"})
 
         BinderyModel.prototype.addAssociation = () ->
-          this.associations.push({name: "New Association", code:"", type:"Has Many"})
+          this.fields.push({name: "New Association", code:"", type:"OrderedListAssociation"})
 
         BinderyModel.prototype.columnDefsFromModel = () ->
           if this.fields.length + this.associations.length > 5

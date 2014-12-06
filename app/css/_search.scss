@@ -24,6 +24,7 @@
 }
 
 .result {
+  clear: both;
   .title {}
   ul.fields {
     li.field {
@@ -32,6 +33,7 @@
         text-align: right;
         float: left;
         margin-right: 1em;
+        margin-left: 1em;
         color: #888;
       }
       .dd {

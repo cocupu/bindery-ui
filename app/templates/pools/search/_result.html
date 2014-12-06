@@ -2,7 +2,7 @@
   <span class="model-indicator">{{model.name}}</span>
   <a ng-click="selectNode(node)" class="title">{{node.title}}</a>
   <ul class="fields list-unstyled">
-    <li class="field" ng-repeat="field in model.fields">
+    <li class="field row" ng-repeat="field in fieldsToDisplay()">
       <div class="dt">{{field.name}}</div>
       <div class="dd" ng-if="!field.multivalue">
         {{node.data[field.id]}}
@@ -13,6 +13,5 @@
         </ul>
       </div>
     </li>
-
   </ul>
 </div>

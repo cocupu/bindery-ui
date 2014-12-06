@@ -17,6 +17,9 @@ NodeEditorCtrl = ($scope, $stateParams, $http, $location, BinderyModel, BinderyN
       node.dirty = false
     )
 
+  $scope.fieldsToDisplay = () ->
+    $scope.model.fields.filter( (field) -> return $scope.node.data[field.id] )
+    
   #
   # tokeninput config options
   #

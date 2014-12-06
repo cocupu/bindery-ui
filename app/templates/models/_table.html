@@ -1,0 +1,14 @@
+<table border="0" cellspacing="5" cellpadding="5">
+  <tr><th>Name</th><th>Description</th><th>Fields</th></tr>
+  <tr class="model" ng-repeat='model in models'>
+    <td><a ui-sref="curate.pool.models.edit({modelId:model.id})">{{model.name}}</a></td>
+    <td class="description">{{model.description}}</td>
+    <td>
+      <ul class="fields">
+        <li class="field" ng-repeat="field in model.fields">
+          {{field.name}}
+        </li>
+      </ul>
+    </td>
+  </tr>
+</table>
